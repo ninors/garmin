@@ -1,5 +1,5 @@
 {
-  "last_sync": "2026-09-04T17:45:23.570172",
+  "last_sync": "2026-09-04T18:27:07.877917",
   "total_courses": 0,
   "total_workouts": 12,
   "total_activities": 25,
@@ -9,84 +9,84 @@
       "id": "1569984053",
       "name": "Copie de 5 minutes intensives",
       "sport": "hiit",
-      "date": "2026-09-04T17:45:04.336871",
+      "date": "2026-09-04T18:26:47.834992",
       "file_path": "data/workouts/Copie_de_5_minutes_intensives_1569984053.json"
     },
     {
       "id": "1569982997",
       "name": "Copie de 10 minutes, poids du corps, maximum de tours/répétitions possibles",
       "sport": "hiit",
-      "date": "2026-09-04T17:45:04.469428",
+      "date": "2026-09-04T18:26:47.961640",
       "file_path": "data/workouts/Copie_de_10_minutes__poids_du_corps__maximum_de_tours_répéti_1569982997.json"
     },
     {
       "id": "1560037295",
       "name": "Magic Half-Mile",
       "sport": "running",
-      "date": "2026-09-04T17:45:04.580342",
+      "date": "2026-09-04T18:26:48.230700",
       "file_path": "data/workouts/Magic_Half-Mile_1560037295.json"
     },
     {
       "id": "1559220036",
       "name": "Exercice d'entraînement",
       "sport": "running",
-      "date": "2026-09-04T17:45:04.689430",
+      "date": "2026-09-04T18:26:48.451524",
       "file_path": "data/workouts/Exercice_d_entraînement_1559220036.json"
     },
     {
       "id": "1556916307",
       "name": "Exercice d'entraînement",
       "sport": "running",
-      "date": "2026-09-04T17:45:04.888448",
+      "date": "2026-09-04T18:26:48.602483",
       "file_path": "data/workouts/Exercice_d_entraînement_1556916307.json"
     },
     {
       "id": "1552450089",
       "name": "Run Walk Run®",
       "sport": "running",
-      "date": "2026-09-04T17:45:06.117920",
+      "date": "2026-09-04T18:26:48.772625",
       "file_path": "data/workouts/Run_Walk_Run__1552450089.json"
     },
     {
       "id": "1551612820",
       "name": "Exercice d'entraînement",
       "sport": "running",
-      "date": "2026-09-04T17:45:06.223232",
+      "date": "2026-09-04T18:26:48.914068",
       "file_path": "data/workouts/Exercice_d_entraînement_1551612820.json"
     },
     {
       "id": "1546961306",
       "name": "Exercice d'entraînement",
       "sport": "running",
-      "date": "2026-09-04T17:45:06.328799",
+      "date": "2026-09-04T18:26:49.046792",
       "file_path": "data/workouts/Exercice_d_entraînement_1546961306.json"
     },
     {
       "id": "1546961307",
       "name": "Run Walk Run®",
       "sport": "running",
-      "date": "2026-09-04T17:45:06.458139",
+      "date": "2026-09-04T18:26:49.204531",
       "file_path": "data/workouts/Run_Walk_Run__1546961307.json"
     },
     {
       "id": "1546961308",
       "name": "Exercice d'entraînement",
       "sport": "running",
-      "date": "2026-09-04T17:45:06.567203",
+      "date": "2026-09-04T18:26:49.375791",
       "file_path": "data/workouts/Exercice_d_entraînement_1546961308.json"
     },
     {
       "id": "1546449895",
       "name": "Course de référence",
       "sport": "running",
-      "date": "2026-09-04T17:45:06.689434",
+      "date": "2026-09-04T18:26:49.514456",
       "file_path": "data/workouts/Course_de_référence_1546449895.json"
     },
     {
       "id": "1319379061",
       "name": "Course de référence",
       "sport": "running",
-      "date": "2026-09-04T17:45:06.803236",
+      "date": "2026-09-04T18:26:49.644731",
       "file_path": "data/workouts/Course_de_référence_1319379061.json"
     }
   ],
