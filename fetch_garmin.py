@@ -170,22 +170,27 @@ def fetch_courses(garmin):
     logger.info("--- Récupération des parcours (Courses) ---")
     courses_dict = {}
 
-    # Fusion des différentes sources de parcours Garmin (User, Favorite, All)
-    sources = [
-        ("get_courses", lambda: garmin.get_courses()),
-        ("course/user", lambda: garmin.connectapi("/course-service/course/user")),
-        ("course/favorite", lambda: garmin.connectapi("/course-service/course/favorite"))
+    # Endpoints pluriels corrects de Garmin Connect pour lister les parcours
+    course_endpoints = [
+        "/course-service/courses",
+        "/course-service/courses/user",
+        "/course-service/courses/search",
+        "/course-service/courses/favorite",
+        "/course-service/course/search"
     ]
 
-    for source_name, fetch_func in sources:
+    for endpoint in course_endpoints:
         try:
-            items = fetch_func() or []
-            for item in items:
-                cid = item.get("courseId") or item.get("id")
-                if cid and cid not in courses_dict:
-                    courses_dict[cid] = item
+            items = garmin.connectapi(endpoint) or []
+            if isinstance(items, dict) and "courses" in items:
+                items = items["courses"]
+            if isinstance(items, list):
+                for item in items:
+                    cid = item.get("courseId") or item.get("id")
+                    if cid and cid not in courses_dict:
+                        courses_dict[cid] = item
         except Exception as e:
-            logger.warning(f"Source de parcours '{source_name}' non accessible : {e}")
+            logger.warning(f"Endpoint parcours '{endpoint}' : {e}")
 
     logger.info(f"{len(courses_dict)} parcours unique(s) trouvé(s).")
     courses_data = []
