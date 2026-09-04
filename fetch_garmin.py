@@ -166,22 +166,20 @@ def generate_gpx_from_course_detail(garmin, course_id, course_name):
         return None
 
 def fetch_courses(garmin):
-    """Récupère tous les parcours enregistrés avec export GPX & FIT (inclus parcours pré-enregistrés)."""
+    """Récupère tous les parcours enregistrés (y compris pré-enregistrés) avec export GPX & FIT."""
     logger.info("--- Récupération des parcours (Courses) ---")
     courses_dict = {}
 
-    # Endpoints pluriels corrects de Garmin Connect pour lister les parcours
-    course_endpoints = [
-        "/course-service/courses",
-        "/course-service/courses/user",
-        "/course-service/courses/search",
-        "/course-service/courses/favorite",
-        "/course-service/course/search"
+    # Endpoints et paramètres de recherche de parcours Garmin Connect
+    search_queries = [
+        ("/course-service/course/search", {"start": 1, "limit": 100}),
+        ("/course-service/course/search", {"start": 0, "limit": 100}),
+        ("/course-service/course/search", {"myCourses": True}),
     ]
 
-    for endpoint in course_endpoints:
+    for endpoint, params in search_queries:
         try:
-            items = garmin.connectapi(endpoint) or []
+            items = garmin.connectapi(endpoint, params=params) if params else garmin.connectapi(endpoint)
             if isinstance(items, dict) and "courses" in items:
                 items = items["courses"]
             if isinstance(items, list):
@@ -190,7 +188,7 @@ def fetch_courses(garmin):
                     if cid and cid not in courses_dict:
                         courses_dict[cid] = item
         except Exception as e:
-            logger.warning(f"Endpoint parcours '{endpoint}' : {e}")
+            logger.warning(f"Recherche parcours '{endpoint}' ({params}) : {e}")
 
     logger.info(f"{len(courses_dict)} parcours unique(s) trouvé(s).")
     courses_data = []
@@ -199,9 +197,9 @@ def fetch_courses(garmin):
         course_name = course.get("courseName") or course.get("name") or f"parcours_{course_id}"
         clean_name = sanitize_filename(course_name)
         
-        distance_m = course.get("distance", 0)
-        elevation_m = course.get("elevationGain", 0)
-        created_date = course.get("createdDate") or course.get("updatedDate") or datetime.now().isoformat()
+        distance_m = course.get("distanceMeter") or course.get("distance", 0)
+        elevation_m = course.get("elevationGainMeter") or course.get("elevationGain", 0)
+        created_date = course.get("createDate") or course.get("createdDate") or datetime.now().isoformat()
 
         logger.info(f"Traitement du parcours ID {course_id} : '{course_name}'")
 
@@ -215,12 +213,12 @@ def fetch_courses(garmin):
         except Exception as e:
             logger.warning(f"  ⚠️ Export GPX officiel indisponible pour {course_id} ({e})")
 
-        # 2. Roue de secours GPX : Si le GPX officiel a échoué (très fréquent sur les parcours pré-enregistrés/importés)
+        # 2. Roue de secours GPX : Si l'export officiel échoue (ex: HTTP 406/400 sur parcours pré-enregistrés)
         if not gpx_bytes or len(gpx_bytes) < 100:
-            logger.info(f"  🔄 Déclenchement de la roue de secours : Reconstitution GPX depuis les geoPoints du parcours...")
+            logger.info(f"  🔄 Roue de secours : Reconstitution GPX depuis les geoPoints du parcours {course_id}...")
             gpx_bytes = generate_gpx_from_course_detail(garmin, course_id, course_name)
 
-        # Sauvegarde du fichier GPX si obtenu
+        # Sauvegarde du fichier GPX
         if gpx_bytes:
             gpx_filename = f"{clean_name}_{course_id}.gpx"
             gpx_filepath = COURSES_GPX_DIR / gpx_filename
@@ -240,7 +238,7 @@ def fetch_courses(garmin):
                 fit_rel_path = f"data/courses/fit/{fit_filename}"
                 logger.info(f"  ✓ FIT sauvegardé : {fit_filename}")
         except Exception as e:
-            logger.warning(f"  ⚠️ Impossible de télécharger le FIT pour {course_id} : {e}")
+            logger.warning(f"  ⚠️ FIT indisponible pour {course_id} : {e}")
 
         if gpx_rel_path or fit_rel_path:
             courses_data.append({
