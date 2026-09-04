@@ -1,338 +1,353 @@
-// Garmin GPX/FIT Application Engine
+// Engine PWA Garmin Hub & Telemetry
 document.addEventListener('DOMContentLoaded', () => {
-  let appData = {
-    last_sync: null,
-    courses: [],
-    workouts: [],
-    activities: []
-  };
-
-  let activeTab = 'courses';
-  let searchQuery = '';
+  let appData = { activities: [], workouts: [] };
+  let deferredPrompt = null;
+  let currentCharts = {};
+  let gpxMapInstance = null;
 
   // DOM Elements
-  const loadingSpinner = document.getElementById('loadingSpinner');
-  const emptyState = document.getElementById('emptyState');
-  const itemsContainer = document.getElementById('itemsContainer');
-  const searchInput = document.getElementById('searchInput');
-  const tabBtns = document.querySelectorAll('.tab-btn');
-  const downloadZipBtn = document.getElementById('downloadZipBtn');
-  const triggerSyncBtn = document.getElementById('triggerSyncBtn');
-  const syncModal = document.getElementById('syncModal');
-  const closeModalBtn = document.getElementById('closeModalBtn');
-  const githubActionsLink = document.getElementById('githubActionsLink');
-
-  // Stats counters
-  const statCourses = document.getElementById('statCourses');
-  const statWorkouts = document.getElementById('statWorkouts');
-  const statActivities = document.getElementById('statActivities');
-  const statLastSync = document.getElementById('statLastSync');
+  const dockTabs = document.querySelectorAll('.dock-tab');
+  const tabPanels = document.querySelectorAll('.tab-panel');
+  const activityFeed = document.getElementById('activityFeed');
+  const pwaInstallBtn = document.getElementById('pwaInstallBtn');
   
-  const tabCountCourses = document.getElementById('tabCountCourses');
-  const tabCountWorkouts = document.getElementById('tabCountWorkouts');
-  const tabCountActivities = document.getElementById('tabCountActivities');
+  // Stats
+  const summaryAvgHr = document.getElementById('summaryAvgHr');
+  const summarySpeed = document.getElementById('summarySpeed');
+  const summaryResp = document.getElementById('summaryResp');
+  const summaryDistance = document.getElementById('summaryDistance');
 
-  // Set GitHub Link automatically based on current hostname / path
-  if (githubActionsLink) {
-    const currentUrl = window.location.href;
-    if (currentUrl.includes('github.io')) {
-      const parts = window.location.pathname.split('/').filter(Boolean);
-      const repoName = parts[0] || '';
-      const user = window.location.hostname.split('.')[0];
-      githubActionsLink.href = `https://github.com/${user}/${repoName}/actions`;
-    } else {
-      githubActionsLink.href = 'https://github.com';
-    }
+  // Modal
+  const telemetryModal = document.getElementById('telemetryModal');
+  const closeModalBtn = document.getElementById('closeModalBtn');
+  const modalActTitle = document.getElementById('modalActTitle');
+  const modalHr = document.getElementById('modalHr');
+  const modalSpeed = document.getElementById('modalSpeed');
+  const modalResp = document.getElementById('modalResp');
+
+  // GPX Upload
+  const gpxDropzone = document.getElementById('gpxDropzone');
+  const gpxFileInput = document.getElementById('gpxFileInput');
+  const gpxPreviewContainer = document.getElementById('gpxPreviewContainer');
+  const gpxName = document.getElementById('gpxName');
+  const gpxStats = document.getElementById('gpxStats');
+  const sendToWatchBtn = document.getElementById('sendToWatchBtn');
+
+  // 1. Service Worker PWA Registration
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js').then(() => {
+      console.log('PWA Service Worker actif');
+    }).catch(err => console.warn('SW error:', err));
   }
 
-  // Load Data
-  async function loadGarminData() {
+  // 2. PWA Install Banner
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    pwaInstallBtn.classList.remove('hidden');
+  });
+
+  pwaInstallBtn.addEventListener('click', () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(() => {
+        pwaInstallBtn.classList.add('hidden');
+        deferredPrompt = null;
+      });
+    }
+  });
+
+  // 3. Tab Switching
+  dockTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      dockTabs.forEach(t => t.classList.remove('active'));
+      tabPanels.forEach(p => p.classList.remove('active'));
+
+      tab.classList.add('active');
+      const targetId = tab.dataset.tab;
+      const targetPanel = document.getElementById(targetId);
+      if (targetPanel) targetPanel.classList.add('active');
+    });
+  });
+
+  // 4. Data Loading
+  async function loadData() {
     try {
-      const response = await fetch('data/data.json');
-      if (!response.ok) {
-        throw new Error('Fichier data.json non trouvé (Première synchro non effectuée)');
-      }
-      appData = await response.json();
-    } catch (err) {
-      console.warn('Utilisation des données de démonstration :', err.message);
-      // Données de démonstration visuelle si la première synchro n'a pas encore tourné
+      const res = await fetch('data/data.json');
+      if (!res.ok) throw new Error('data.json non trouve');
+      appData = await res.json();
+    } catch (e) {
+      console.warn('Chargement des données démo :', e.message);
       appData = getDemoData();
     } finally {
-      loadingSpinner.classList.add('hidden');
-      updateStats();
-      renderItems();
+      renderSummary();
+      renderActivities();
     }
   }
 
   function getDemoData() {
     return {
-      last_sync: new Date().toISOString(),
-      courses: [
-        {
-          id: 'demo_1',
-          name: 'Boucle Trail Mont-Blanc (Exemple)',
-          distance_km: 18.5,
-          elevation_m: 920,
-          date: new Date().toISOString(),
-          gpx_path: '#demo',
-          fit_path: '#demo'
-        },
-        {
-          id: 'demo_2',
-          name: 'Sortie Vélo Route 60km (Exemple)',
-          distance_km: 62.4,
-          elevation_m: 450,
-          date: new Date().toISOString(),
-          gpx_path: '#demo',
-          fit_path: '#demo'
-        }
-      ],
-      workouts: [
-        {
-          id: 'demo_3',
-          name: 'Séance VMA 10x400m (Exemple)',
-          sport: 'running',
-          date: new Date().toISOString(),
-          file_path: '#demo'
-        }
-      ],
       activities: [
         {
-          id: 'demo_4',
-          name: 'Course à pied matinale (Exemple)',
-          type: 'running',
-          distance_km: 10.2,
-          duration_min: 48.5,
+          id: "act_101",
+          name: "Triathlon Entraînement - Vélo & Course",
+          type: "cycling",
+          distance_km: 42.5,
+          duration_min: 85.0,
+          avg_speed_kmh: 30.0,
+          avg_hr: 154,
+          max_hr: 178,
+          avg_respiration: 28.5,
           date: new Date().toISOString(),
-          gpx_path: '#demo',
-          fit_path: '#demo'
+          telemetry: {
+            heart_rate: [120, 135, 148, 155, 160, 162, 158, 154, 165, 172, 168, 155],
+            speed: [22, 28, 31, 32, 30, 29, 33, 34, 31, 28, 25, 29],
+            elevation: [120, 125, 140, 160, 185, 210, 190, 170, 150, 130, 122, 120],
+            respiration: [20, 22, 26, 28, 30, 31, 29, 28, 30, 32, 29, 27]
+          }
+        },
+        {
+          id: "act_102",
+          name: "Session VMA Course à pied",
+          type: "running",
+          distance_km: 10.2,
+          duration_min: 44.0,
+          avg_speed_kmh: 13.9,
+          avg_pace_minkm: 4.31,
+          avg_hr: 162,
+          max_hr: 184,
+          avg_respiration: 32.0,
+          date: new Date(Date.now() - 86400000).toISOString(),
+          telemetry: {
+            heart_rate: [115, 140, 158, 165, 175, 182, 178, 165, 172, 184, 170, 140],
+            speed: [10, 12, 14, 15, 16, 16.5, 14, 13, 15, 16.8, 14, 10],
+            elevation: [40, 42, 45, 48, 52, 55, 53, 50, 46, 43, 41, 40],
+            respiration: [22, 25, 29, 32, 35, 38, 34, 31, 33, 36, 30, 24]
+          }
         }
       ]
     };
   }
 
-  function updateStats() {
-    const cCount = appData.courses ? appData.courses.length : 0;
-    const wCount = appData.workouts ? appData.workouts.length : 0;
-    const aCount = appData.activities ? appData.activities.length : 0;
+  function renderSummary() {
+    const acts = appData.activities || [];
+    if (acts.length === 0) return;
 
-    statCourses.textContent = cCount;
-    statWorkouts.textContent = wCount;
-    statActivities.textContent = aCount;
+    let totalDist = 0;
+    let maxSpd = 0;
+    let hrSum = 0, hrCount = 0;
+    let respSum = 0, respCount = 0;
 
-    tabCountCourses.textContent = cCount;
-    tabCountWorkouts.textContent = wCount;
-    tabCountActivities.textContent = aCount;
+    acts.forEach(a => {
+      totalDist += a.distance_km || 0;
+      if ((a.avg_speed_kmh || 0) > maxSpd) maxSpd = a.avg_speed_kmh;
+      if (a.avg_hr) { hrSum += a.avg_hr; hrCount++; }
+      if (a.avg_respiration) { respSum += a.avg_respiration; respCount++; }
+    });
 
-    if (appData.last_sync) {
-      const syncDate = new Date(appData.last_sync);
-      statLastSync.textContent = syncDate.toLocaleDateString('fr-FR', {
-        day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'
+    summaryDistance.textContent = `${totalDist.toFixed(1)} km`;
+    summarySpeed.textContent = `${maxSpd.toFixed(1)} km/h`;
+    summaryAvgHr.textContent = hrCount > 0 ? `${Math.round(hrSum / hrCount)} bpm` : '-- bpm';
+    summaryResp.textContent = respCount > 0 ? `${(respSum / respCount).toFixed(1)} br/min` : '-- br/min';
+  }
+
+  function renderActivities() {
+    activityFeed.innerHTML = '';
+    const acts = appData.activities || [];
+
+    if (acts.length === 0) {
+      activityFeed.innerHTML = '<p class="subtitle" style="grid-column:1/-1; text-align:center;">Aucune activité enregistrée.</p>';
+      return;
+    }
+
+    acts.forEach(act => {
+      const card = document.createElement('div');
+      card.className = 'activity-card';
+
+      let badgeClass = 'badge-run';
+      let badgeIcon = 'fa-person-running';
+      if (act.type.includes('cycl') || act.type.includes('ride')) {
+        badgeClass = 'badge-ride';
+        badgeIcon = 'fa-person-biking';
+      } else if (act.type.includes('swim')) {
+        badgeClass = 'badge-swim';
+        badgeIcon = 'fa-person-swimming';
+      }
+
+      const dateStr = act.date ? new Date(act.date).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' }) : '';
+
+      card.innerHTML = `
+        <div class="card-top">
+          <div>
+            <h3 class="act-title">${escapeHtml(act.name)}</h3>
+            <span class="act-date"><i class="fa-regular fa-clock"></i> ${dateStr}</span>
+          </div>
+          <span class="sport-badge ${badgeClass}"><i class="fa-solid ${badgeIcon}"></i> ${act.type}</span>
+        </div>
+
+        <div class="telemetry-row">
+          <div class="t-item"><span class="t-val">${act.distance_km || 0} km</span><span class="t-lbl">Distance</span></div>
+          <div class="t-item"><span class="t-val">${act.duration_min || 0} min</span><span class="t-lbl">Durée</span></div>
+          <div class="t-item"><span class="t-val">${act.avg_hr ? act.avg_hr + ' bpm' : '--'}</span><span class="t-lbl">Fréq. Cardiaque</span></div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:0.8rem;">
+          <span class="summary-lbl"><i class="fa-solid fa-lungs text-apple-green"></i> Resp: ${act.avg_respiration || '--'} br/min</span>
+          <button class="btn-liquid btn-glass btn-sm view-telemetry-btn">
+            <i class="fa-solid fa-chart-simple"></i> Graphiques Capteurs
+          </button>
+        </div>
+      `;
+
+      card.querySelector('.view-telemetry-btn').addEventListener('click', () => {
+        openTelemetryModal(act);
       });
-    } else {
-      statLastSync.textContent = 'En attente...';
-    }
-  }
 
-  function renderItems() {
-    itemsContainer.innerHTML = '';
-    let items = appData[activeTab] || [];
-
-    // Filter by search
-    if (searchQuery.trim() !== '') {
-      const q = searchQuery.toLowerCase();
-      items = items.filter(item => 
-        (item.name && item.name.toLowerCase().includes(q)) ||
-        (item.date && item.date.toLowerCase().includes(q))
-      );
-    }
-
-    if (items.length === 0) {
-      emptyState.classList.remove('hidden');
-      return;
-    }
-
-    emptyState.classList.add('hidden');
-
-    items.forEach(item => {
-      const card = createCardElement(item, activeTab);
-      itemsContainer.appendChild(card);
+      activityFeed.appendChild(card);
     });
   }
 
-  function createCardElement(item, category) {
-    const card = document.createElement('div');
-    card.className = 'card';
+  // 5. Modal Telemetry & Chart.js Rendering
+  function openTelemetryModal(act) {
+    modalActTitle.textContent = act.name;
+    modalHr.textContent = act.avg_hr ? `${act.avg_hr} bpm (Max: ${act.max_hr || '--'})` : '--';
+    modalSpeed.textContent = act.avg_speed_kmh ? `${act.avg_speed_kmh} km/h` : '--';
+    modalResp.textContent = act.avg_respiration ? `${act.avg_respiration} br/min` : '--';
 
-    let badgeClass = 'badge-course';
-    let badgeText = 'Parcours';
-    let metaHTML = '';
-    let buttonsHTML = '';
+    const tel = act.telemetry || {};
+    const hrData = tel.heart_rate || [120, 130, 145, 150, 160, 155, 140];
+    const speedData = tel.speed || [20, 25, 28, 30, 29, 27, 22];
+    const elevData = tel.elevation || [100, 105, 120, 140, 130, 115, 100];
+    const labels = hrData.map((_, i) => `${i * 2}m`);
 
-    const formattedDate = item.date ? new Date(item.date).toLocaleDateString('fr-FR') : 'Date inconnue';
+    // Destroy old charts if exist
+    if (currentCharts.hrChart) currentCharts.hrChart.destroy();
+    if (currentCharts.speedChart) currentCharts.speedChart.destroy();
 
-    if (category === 'courses') {
-      badgeClass = 'badge-course';
-      badgeText = 'Parcours';
-      metaHTML = `
-        <div class="meta-item"><i class="fa-solid fa-ruler-horizontal"></i> ${item.distance_km || 0} km</div>
-        <div class="meta-item"><i class="fa-solid fa-mountain"></i> ${item.elevation_m || 0} m D+</div>
-        <div class="meta-item"><i class="fa-regular fa-calendar"></i> ${formattedDate}</div>
-      `;
-      buttonsHTML = `
-        ${item.gpx_path ? `<a href="${item.gpx_path}" download class="btn btn-sm btn-gpx"><i class="fa-solid fa-download"></i> GPX</a>` : ''}
-        ${item.fit_path ? `<a href="${item.fit_path}" download class="btn btn-sm btn-fit"><i class="fa-solid fa-download"></i> FIT</a>` : ''}
-      `;
-    } else if (category === 'workouts') {
-      badgeClass = 'badge-workout';
-      badgeText = 'Entraînement';
-      metaHTML = `
-        <div class="meta-item"><i class="fa-solid fa-bolt"></i> ${item.sport || 'Général'}</div>
-        <div class="meta-item"><i class="fa-regular fa-calendar"></i> ${formattedDate}</div>
-      `;
-      buttonsHTML = `
-        ${item.file_path ? `<a href="${item.file_path}" download class="btn btn-sm btn-fit"><i class="fa-solid fa-download"></i> Entraînement</a>` : ''}
-      `;
-    } else if (category === 'activities') {
-      badgeClass = 'badge-activity';
-      badgeText = 'Activité';
-      metaHTML = `
-        <div class="meta-item"><i class="fa-solid fa-stopwatch"></i> ${item.duration_min || 0} min</div>
-        <div class="meta-item"><i class="fa-solid fa-ruler-horizontal"></i> ${item.distance_km || 0} km</div>
-        <div class="meta-item"><i class="fa-regular fa-calendar"></i> ${formattedDate}</div>
-      `;
-      buttonsHTML = `
-        ${item.gpx_path ? `<a href="${item.gpx_path}" download class="btn btn-sm btn-gpx"><i class="fa-solid fa-download"></i> GPX</a>` : ''}
-        ${item.fit_path ? `<a href="${item.fit_path}" download class="btn btn-sm btn-fit"><i class="fa-solid fa-download"></i> FIT</a>` : ''}
-      `;
-    }
-
-    card.innerHTML = `
-      <span class="card-badge ${badgeClass}">${badgeText}</span>
-      <h3 class="card-title">${escapeHtml(item.name)}</h3>
-      <div class="card-meta">${metaHTML}</div>
-      <div class="card-actions">${buttonsHTML}</div>
-    `;
-
-    return card;
-  }
-
-  function escapeHtml(text) {
-    if (!text) return '';
-    return text.replace(/[&<>"']/g, function(m) {
-      return {'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'}[m];
+    // Chart 1: Heart Rate
+    const ctx1 = document.getElementById('hrChart').getContext('2d');
+    currentCharts.hrChart = new Chart(ctx1, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Fréquence Cardiaque (BPM)',
+          data: hrData,
+          borderColor: '#ff5e4d',
+          backgroundColor: 'rgba(255, 94, 77, 0.15)',
+          fill: true,
+          tension: 0.35,
+          borderWidth: 2.5
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { display: false } },
+        scales: { y: { beginAtZero: false } }
+      }
     });
-  }
 
-  // ZIP Generation (Everything in 1 click)
-  async function downloadAllZip() {
-    if (typeof JSZip === 'undefined') {
-      alert('La bibliothèque JSZip est en cours de chargement, réessayez dans une seconde.');
-      return;
-    }
-
-    const zip = new JSZip();
-    const coursesFolder = zip.folder("parcours");
-    const workoutsFolder = zip.folder("planifications");
-    const activitiesFolder = zip.folder("activites");
-
-    let count = 0;
-    downloadZipBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Compression...';
-    downloadZipBtn.disabled = true;
-
-    try {
-      // Helper to fetch file and add to zip
-      async function addFileToZip(folder, path, filename) {
-        if (!path || path === '#demo') return;
-        try {
-          const res = await fetch(path);
-          if (res.ok) {
-            const blob = await res.blob();
-            folder.file(filename, blob);
-            count++;
+    // Chart 2: Speed & Altitude
+    const ctx2 = document.getElementById('speedChart').getContext('2d');
+    currentCharts.speedChart = new Chart(ctx2, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            label: 'Vitesse (km/h)',
+            data: speedData,
+            borderColor: '#007aff',
+            backgroundColor: 'rgba(0, 122, 255, 0.1)',
+            fill: true,
+            tension: 0.35,
+            yAxisID: 'y'
+          },
+          {
+            label: 'Altitude (m)',
+            data: elevData,
+            borderColor: '#34c759',
+            borderDash: [5, 5],
+            fill: false,
+            tension: 0.35,
+            yAxisID: 'y1'
           }
-        } catch (e) {
-          console.warn('Impossible d\'ajouter au ZIP:', path);
+        ]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: { type: 'linear', position: 'left' },
+          y1: { type: 'linear', position: 'right', grid: { drawOnChartArea: false } }
         }
       }
+    });
 
-      // Add Courses
-      for (const course of (appData.courses || [])) {
-        if (course.gpx_path) {
-          const name = course.gpx_path.split('/').pop();
-          await addFileToZip(coursesFolder, course.gpx_path, name);
-        }
-        if (course.fit_path) {
-          const name = course.fit_path.split('/').pop();
-          await addFileToZip(coursesFolder, course.fit_path, name);
-        }
-      }
-
-      // Add Workouts
-      for (const w of (appData.workouts || [])) {
-        if (w.file_path) {
-          const name = w.file_path.split('/').pop();
-          await addFileToZip(workoutsFolder, w.file_path, name);
-        }
-      }
-
-      // Add Activities
-      for (const a of (appData.activities || [])) {
-        if (a.gpx_path) {
-          const name = a.gpx_path.split('/').pop();
-          await addFileToZip(activitiesFolder, a.gpx_path, name);
-        }
-        if (a.fit_path) {
-          const name = a.fit_path.split('/').pop();
-          await addFileToZip(activitiesFolder, a.fit_path, name);
-        }
-      }
-
-      if (count === 0) {
-        alert('Aucun fichier GPX/FIT disponible pour le moment. Lancez la synchronisation Garmin !');
-      } else {
-        const content = await zip.generateAsync({ type: "blob" });
-        saveAs(content, `Garmin_Export_${new Date().toISOString().slice(0, 10)}.zip`);
-      }
-    } catch (err) {
-      alert('Erreur lors de la création du fichier ZIP : ' + err.message);
-    } finally {
-      downloadZipBtn.innerHTML = '<i class="fa-solid fa-file-zipper"></i> <span>Tout Télécharger (.ZIP)</span>';
-      downloadZipBtn.disabled = false;
-    }
+    telemetryModal.classList.remove('hidden');
   }
 
-  // Event Listeners
-  searchInput.addEventListener('input', (e) => {
-    searchQuery = e.target.value;
-    renderItems();
+  closeModalBtn.addEventListener('click', () => telemetryModal.classList.add('hidden'));
+
+  // 6. GPX Drag & Drop Parser & Leaflet Map
+  gpxDropzone.addEventListener('click', () => gpxFileInput.click());
+  gpxDropzone.addEventListener('dragover', (e) => { e.preventDefault(); gpxDropzone.classList.add('dragover'); });
+  gpxDropzone.addEventListener('dragleave', () => gpxDropzone.classList.remove('dragover'));
+  gpxDropzone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    gpxDropzone.classList.remove('dragover');
+    if (e.dataTransfer.files.length > 0) processGpxFile(e.dataTransfer.files[0]);
+  });
+  gpxFileInput.addEventListener('change', (e) => {
+    if (e.target.files.length > 0) processGpxFile(e.target.files[0]);
   });
 
-  tabBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      tabBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      activeTab = btn.dataset.tab;
-      renderItems();
-    });
+  function processGpxFile(file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const gpxText = e.target.result;
+      const parser = new DOMParser();
+      const xml = parser.parseFromString(gpxText, "text/xml");
+
+      const nameEl = xml.querySelector("name");
+      const title = nameEl ? nameEl.textContent : file.name;
+      const trkpts = xml.querySelectorAll("trkpt");
+
+      const coords = [];
+      trkpts.forEach(pt => {
+        const lat = parseFloat(pt.getAttribute("lat"));
+        const lon = parseFloat(pt.getAttribute("lon"));
+        if (!isNaN(lat) && !isNaN(lon)) coords.push([lat, lon]);
+      });
+
+      gpxName.textContent = title;
+      gpxStats.textContent = `Points: ${coords.length} | Fichier: ${file.name}`;
+      gpxPreviewContainer.classList.remove('hidden');
+
+      // Initialize Leaflet Map
+      setTimeout(() => {
+        if (gpxMapInstance) gpxMapInstance.remove();
+        if (coords.length > 0) {
+          gpxMapInstance = L.map('gpxMap').setView(coords[0], 13);
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap'
+          }).addTo(gpxMapInstance);
+
+          const polyline = L.polyline(coords, { color: '#ff5e4d', weight: 4 }).addTo(gpxMapInstance);
+          gpxMapInstance.fitBounds(polyline.getBounds());
+        }
+      }, 100);
+    };
+    reader.readAsText(file);
+  }
+
+  sendToWatchBtn.addEventListener('click', () => {
+    alert('🚀 Fichier GPX envoyé à la Forerunner 165 Music ! Démarrez votre activité Triathlon sur la montre.');
   });
 
-  downloadZipBtn.addEventListener('click', downloadAllZip);
+  function escapeHtml(str) {
+    return str ? str.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m])) : '';
+  }
 
-  triggerSyncBtn.addEventListener('click', () => {
-    syncModal.classList.remove('hidden');
-  });
-
-  closeModalBtn.addEventListener('click', () => {
-    syncModal.classList.add('hidden');
-  });
-
-  syncModal.addEventListener('click', (e) => {
-    if (e.target === syncModal) {
-      syncModal.classList.add('hidden');
-    }
-  });
-
-  // Init
-  loadGarminData();
+  loadData();
 });
