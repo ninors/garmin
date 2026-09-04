@@ -130,25 +130,67 @@ def login_garmin():
                 logger.error(f"Échec de connexion après {max_retries} tentatives : {e}")
                 sys.exit(1)
 
-def fetch_courses(garmin):
-    """Récupère tous les parcours enregistrés avec export GPX & FIT."""
-    logger.info("--- Récupération des parcours (Courses) ---")
-    courses_data = []
-    
+def generate_gpx_from_course_detail(garmin, course_id, course_name):
+    """Roue de secours ultime : Récupère les points géographiques bruts du parcours et reconstruit un fichier GPX valide."""
     try:
-        # Essai API principale des parcours
-        courses = garmin.get_courses()
-        logger.info(f"{len(courses)} parcours trouvé(s).")
-    except Exception as e:
-        logger.warning(f"Impossible de lister les parcours via l'API standard ({e}). Essai du fallback...")
-        try:
-            courses = garmin.connectapi("/course-service/course/user")
-        except Exception as e2:
-            logger.error(f"Échec de la récupération des parcours : {e2}")
-            return courses_data
+        detail = garmin.connectapi(f"/course-service/course/{course_id}")
+        points = detail.get("geoPoints") or detail.get("coursePoints") or detail.get("points") or []
+        if not points:
+            return None
 
-    for course in courses:
-        course_id = course.get("courseId") or course.get("id")
+        clean_title = course_name.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+        gpx_lines = [
+            '<?xml version="1.0" encoding="UTF-8"?>',
+            '<gpx version="1.1" creator="Garmin GPX Sync" xmlns="http://www.topografix.com/GPX/1/1">',
+            '  <trk>',
+            f'    <name>{clean_title}</name>',
+            '    <trkseg>'
+        ]
+
+        for pt in points:
+            lat = pt.get("latitude") or pt.get("lat")
+            lon = pt.get("longitude") or pt.get("lon") or pt.get("lng")
+            ele = pt.get("elevation") or pt.get("alt") or 0
+            if lat is not None and lon is not None:
+                gpx_lines.append(f'      <trkpt lat="{lat}" lon="{lon}"><ele>{ele}</ele></trkpt>')
+
+        gpx_lines.extend([
+            '    </trkseg>',
+            '  </trk>',
+            '</gpx>'
+        ])
+
+        return "\n".join(gpx_lines).encode("utf-8")
+    except Exception as e:
+        logger.warning(f"  ⚠️ Reconstitution GPX manuelle impossible pour {course_id} : {e}")
+        return None
+
+def fetch_courses(garmin):
+    """Récupère tous les parcours enregistrés avec export GPX & FIT (inclus parcours pré-enregistrés)."""
+    logger.info("--- Récupération des parcours (Courses) ---")
+    courses_dict = {}
+
+    # Fusion des différentes sources de parcours Garmin (User, Favorite, All)
+    sources = [
+        ("get_courses", lambda: garmin.get_courses()),
+        ("course/user", lambda: garmin.connectapi("/course-service/course/user")),
+        ("course/favorite", lambda: garmin.connectapi("/course-service/course/favorite"))
+    ]
+
+    for source_name, fetch_func in sources:
+        try:
+            items = fetch_func() or []
+            for item in items:
+                cid = item.get("courseId") or item.get("id")
+                if cid and cid not in courses_dict:
+                    courses_dict[cid] = item
+        except Exception as e:
+            logger.warning(f"Source de parcours '{source_name}' non accessible : {e}")
+
+    logger.info(f"{len(courses_dict)} parcours unique(s) trouvé(s).")
+    courses_data = []
+
+    for course_id, course in courses_dict.items():
         course_name = course.get("courseName") or course.get("name") or f"parcours_{course_id}"
         clean_name = sanitize_filename(course_name)
         
@@ -160,28 +202,38 @@ def fetch_courses(garmin):
 
         gpx_rel_path = None
         fit_rel_path = None
+        gpx_bytes = None
 
-        # Export GPX (avec sécurité try/except pour continuer si un fichier bugue)
+        # 1. Tentative d'export GPX officiel
         try:
             gpx_bytes = garmin.download_course_gpx(course_id)
+        except Exception as e:
+            logger.warning(f"  ⚠️ Export GPX officiel indisponible pour {course_id} ({e})")
+
+        # 2. Roue de secours GPX : Si le GPX officiel a échoué (très fréquent sur les parcours pré-enregistrés/importés)
+        if not gpx_bytes or len(gpx_bytes) < 100:
+            logger.info(f"  🔄 Déclenchement de la roue de secours : Reconstitution GPX depuis les geoPoints du parcours...")
+            gpx_bytes = generate_gpx_from_course_detail(garmin, course_id, course_name)
+
+        # Sauvegarde du fichier GPX si obtenu
+        if gpx_bytes:
             gpx_filename = f"{clean_name}_{course_id}.gpx"
             gpx_filepath = COURSES_GPX_DIR / gpx_filename
             with open(gpx_filepath, "wb") as f:
                 f.write(gpx_bytes)
             gpx_rel_path = f"data/courses/gpx/{gpx_filename}"
             logger.info(f"  ✓ GPX sauvegardé : {gpx_filename}")
-        except Exception as e:
-            logger.warning(f"  ⚠️ Impossible de télécharger le GPX pour {course_id} : {e}")
 
-        # Export FIT
+        # 3. Export FIT
         try:
             fit_bytes = garmin.download_course_fit(course_id)
-            fit_filename = f"{clean_name}_{course_id}.fit"
-            fit_filepath = COURSES_FIT_DIR / fit_filename
-            with open(fit_filepath, "wb") as f:
-                f.write(fit_bytes)
-            fit_rel_path = f"data/courses/fit/{fit_filename}"
-            logger.info(f"  ✓ FIT sauvegardé : {fit_filename}")
+            if fit_bytes and len(fit_bytes) > 0:
+                fit_filename = f"{clean_name}_{course_id}.fit"
+                fit_filepath = COURSES_FIT_DIR / fit_filename
+                with open(fit_filepath, "wb") as f:
+                    f.write(fit_bytes)
+                fit_rel_path = f"data/courses/fit/{fit_filename}"
+                logger.info(f"  ✓ FIT sauvegardé : {fit_filename}")
         except Exception as e:
             logger.warning(f"  ⚠️ Impossible de télécharger le FIT pour {course_id} : {e}")
 
