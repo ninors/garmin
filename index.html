@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Garmin Connect Export | GPX & FIT Hub</title>
+  <meta name="description" content="Téléchargez et gérez vos parcours et planifications Garmin aux formats GPX et FIT.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- JSZip & FileSaver pour téléchargement ZIP en 1-clic -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+  
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="header">
+      <div class="brand">
+        <div class="logo-icon">
+          <i class="fa-solid fa-route"></i>
+        </div>
+        <div>
+          <h1>Garmin GPX/FIT Sync</h1>
+          <p class="subtitle">Vos Parcours, Planifications et Entraînements Garmin en 1 clic</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button id="downloadZipBtn" class="btn btn-primary glow-effect">
+          <i class="fa-solid fa-file-zipper"></i>
+          <span>Tout Télécharger (.ZIP)</span>
+        </button>
+        <button id="triggerSyncBtn" class="btn btn-secondary">
+          <i class="fa-solid fa-rotate-right"></i>
+          <span>Lancer la Synchro</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Stats Banner -->
+    <section class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon courses"><i class="fa-solid fa-map-location-dot"></i></div>
+        <div class="stat-info">
+          <span class="stat-value" id="statCourses">0</span>
+          <span class="stat-label">Parcours (GPX/FIT)</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon workouts"><i class="fa-solid fa-dumbbell"></i></div>
+        <div class="stat-info">
+          <span class="stat-value" id="statWorkouts">0</span>
+          <span class="stat-label">Planifications & Workouts</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon activities"><i class="fa-solid fa-person-running"></i></div>
+        <div class="stat-info">
+          <span class="stat-value" id="statActivities">0</span>
+          <span class="stat-label">Activités Récentes</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon sync"><i class="fa-solid fa-clock-rotate-left"></i></div>
+        <div class="stat-info">
+          <span class="stat-value text-sm" id="statLastSync">Dernière synchro...</span>
+          <span class="stat-label">Statut du Serveur</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filter & Search Controls -->
+    <section class="controls-bar">
+      <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="searchInput" placeholder="Rechercher un parcours, entraînement ou date...">
+      </div>
+
+      <div class="tab-buttons">
+        <button class="tab-btn active" data-tab="courses">
+          <i class="fa-solid fa-route"></i> Parcours (<span id="tabCountCourses">0</span>)
+        </button>
+        <button class="tab-btn" data-tab="workouts">
+          <i class="fa-solid fa-calendar-check"></i> Planifications (<span id="tabCountWorkouts">0</span>)
+        </button>
+        <button class="tab-btn" data-tab="activities">
+          <i class="fa-solid fa-bolt"></i> Activités (<span id="tabCountActivities">0</span>)
+        </button>
+      </div>
+    </section>
+
+    <!-- Main Content Grid -->
+    <main class="content-section">
+      <div id="loadingSpinner" class="loading-state">
+        <i class="fa-solid fa-circle-notch fa-spin"></i>
+        <p>Chargement des parcours et planifications Garmin...</p>
+      </div>
+
+      <div id="emptyState" class="empty-state hidden">
+        <i class="fa-solid fa-folder-open"></i>
+        <h3>Aucun élément trouvé</h3>
+        <p>Lancez une première synchronisation GitHub Action pour alimenter votre liste.</p>
+      </div>
+
+      <div id="itemsContainer" class="items-grid"></div>
+    </main>
+  </div>
+
+  <!-- Modal Synchro -->
+  <div id="syncModal" class="modal-backdrop hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-sync"></i> Synchroniser avec Garmin</h3>
+        <button id="closeModalBtn" class="close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>Pour lancer l'extraction automatique depuis votre compte Garmin Connect :</p>
+        <ol class="instructions-list">
+          <li>Rendez-vous dans l'onglet <strong>Actions</strong> de votre dépôt GitHub.</li>
+          <li>Cliquez sur le workflow <strong>Garmin Sync & Export</strong>.</li>
+          <li>Cliquez sur le bouton <strong>Run workflow</strong>.</li>
+        </ol>
+        <p class="tip-box">
+          <i class="fa-solid fa-lightbulb"></i> 
+          <strong>Astuce :</strong> Le workflow tourne également automatiquement tous les dimanches et sur chaque mise à jour du dépôt !
+        </p>
+      </div>
+      <div class="modal-footer">
+        <a id="githubActionsLink" href="#" target="_blank" class="btn btn-primary">
+          <i class="fa-brands fa-github"></i> Ouvrir GitHub Actions
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
