@@ -41,7 +41,7 @@
   "atpPlanId": 1777063349,
   "workoutNameI18nKey": null,
   "descriptionI18nKey": null,
-  "workoutThumbnailUrl": null,
+  "workoutThumbnailUrl": "https://connect.garmin.com/chart-service/workout?data=md:s1,c2=120000.0;s3,c2=300000.0;s2,c2=120000.0;",
   "specializedWorkoutCategories": [
     "ATP"
   ],
