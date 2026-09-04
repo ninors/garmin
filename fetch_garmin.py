@@ -7,58 +7,62 @@ from garminconnect import (
     GarminConnectTooManyRequestsError,
 )
 
-# Récupération des identifiants stockés dans les secrets GitHub
 email = os.getenv("GARMIN_EMAIL")
 password = os.getenv("GARMIN_PASSWORD")
 token_dir = os.path.expanduser("~/.garminconnect")
 
 def init_garmin():
-    """Initialise la connexion à Garmin Connect en réutilisant les tokens si possible."""
-    try:
-        # Essai de reconnexion via les tokens enregistrés
-        garmin = Garmin()
-        garmin.login(token_dir)
-        print("Connexion réussie via les tokens de session.")
-        return garmin
-    except (FileNotFoundError, GarminConnectAuthenticationError):
-        # Première connexion ou tokens expirés
-        try:
-            print("Connexion initiale avec e-mail et mot de passe...")
-            garmin = Garmin(email, password)
-            garmin.login()
-            # Sauvegarde des tokens pour les prochaines exécutions
-            garmin.garth.dump(token_dir)
-            return garmin
-        except (GarminConnectAuthenticationError, GarminConnectTooManyRequestsError) as e:
-            print(f"Erreur d'authentification Garmin : {e}")
-            raise
-
-def main():
+    """Initialise la connexion à Garmin Connect."""
     if not email or not password:
         raise ValueError("Les variables d'environnement GARMIN_EMAIL et GARMIN_PASSWORD doivent être configurées.")
 
+    garmin = Garmin(email, password)
+
+    # 1. Tentative de connexion via les tokens existants
+    if os.path.exists(token_dir):
+        try:
+            print("Tentative de connexion avec les tokens enregistrés...")
+            garmin.login(token_dir)
+            print("Connexion réussie via les tokens.")
+            return garmin
+        except Exception as e:
+            print(f"Échec de connexion avec les tokens : {e}. Tentative avec identifiants...")
+
+    # 2. Connexion initiale avec identifiants
+    try:
+        print("Connexion initiale avec e-mail et mot de passe...")
+        garmin.login()
+        # Enregistre les nouveaux tokens
+        os.makedirs(token_dir, exist_ok=True)
+        garmin.login(token_dir)
+        print("Nouveaux tokens enregistrés.")
+        return garmin
+    except (GarminConnectAuthenticationError, GarminConnectTooManyRequestsError) as e:
+        print(f"Erreur lors de la connexion Garmin : {e}")
+        raise
+
+def main():
     garmin = init_garmin()
 
-    # Date du jour (YYYY-MM-DD)
     today = datetime.now().strftime("%Y-%m-%d")
 
     print("Récupération des données...")
 
-    # 1. Résumé quotidien (pas, calories, rythme cardiaque, etc.)
+    # Résumé quotidien
     try:
         stats = garmin.get_user_summary(today)
     except Exception as e:
         print(f"Impossible de récupérer le résumé quotidien : {e}")
         stats = {}
 
-    # 2. Les 5 dernières activités enregistrées
+    # Dernières activités
     try:
         activities = garmin.get_activities(0, 5)
     except Exception as e:
         print(f"Impossible de récupérer les activités : {e}")
         activities = []
 
-    # Structure JSON finale exportée
+    # Structure JSON finale
     output_data = {
         "updated_at": datetime.now().isoformat(),
         "today_summary": {
@@ -85,7 +89,6 @@ def main():
         ]
     }
 
-    # Écriture dans le fichier data.json
     with open("data.json", "w", encoding="utf-8") as f:
         json.dump(output_data, f, indent=2, ensure_ascii=False)
 
