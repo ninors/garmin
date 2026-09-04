@@ -49,42 +49,86 @@ def sanitize_filename(name):
     return clean.strip().replace(" ", "_")[:60]
 
 def login_garmin():
-    """Authentification sécurisée avec sauvegarde/reprise de session (Roues de secours)."""
+    """Authentification sécurisée avec User-Agent Navigateur (Contournement anti-bot 429)."""
     email = os.environ.get("GARMIN_EMAIL")
     password = os.environ.get("GARMIN_PASSWORD")
+    tokens_base64 = os.environ.get("GARMIN_TOKENS")
 
-    if not email or not password:
-        logger.error("Erreur : GARMIN_EMAIL et GARMIN_PASSWORD doivent être définis en variables d'environnement !")
-        sys.exit(1)
-
-    garmin = None
+    # Masquer l'agent Python et simuler un vrai navigateur Chrome (contourne le filtre 429 de sso.garmin.com)
+    CHROME_USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
     
-    # 1. Tentative de reprise de session par Token (Évite d'envoyer le mot de passe à chaque fois)
+    try:
+        garth.configure(domain="garmin.com")
+        if hasattr(garth.client, "USER_AGENT"):
+            garth.client.USER_AGENT = CHROME_USER_AGENT
+        if hasattr(garth.client, "sess") and hasattr(garth.client.sess, "headers"):
+            garth.client.sess.headers["User-Agent"] = CHROME_USER_AGENT
+    except Exception as e:
+        logger.warning(f"Impossible d'injecter le User-Agent Chrome : {e}")
+
+    # 0. Restauration des tokens si présent dans GARMIN_TOKENS
+    if tokens_base64:
+        try:
+            import base64, io, zipfile
+            logger.info("Restauration des tokens de session depuis GARMIN_TOKENS...")
+            decoded = base64.b64decode(tokens_base64)
+            with zipfile.ZipFile(io.BytesIO(decoded), "r") as zip_ref:
+                zip_ref.extractall(TOKEN_DIR)
+            logger.info("Tokens restaurés avec succès !")
+        except Exception as e:
+            logger.warning(f"Erreur de restauration des tokens : {e}")
+
+    # 1. Tentative de reprise de session par Token existant
     if TOKEN_DIR.exists() and any(TOKEN_DIR.iterdir()):
         try:
             logger.info("Tentative d'authentification par session/token existant...")
             garmin = Garmin()
-            garmin.login(TOKEN_DIR)
-            logger.info("Connexion réutilisée avec succès !")
+            garmin.login(str(TOKEN_DIR))
+            logger.info("Connexion par Token réussie !")
             return garmin
         except Exception as e:
-            logger.warning(f"Échec d'utilisation des tokens enregistrés ({e}). Tentative de connexion complète...")
+            logger.warning(f"Échec d'utilisation des tokens enregistrés ({e})...")
 
-    # 2. Authentification classique avec email/mot de passe
-    try:
-        logger.info(f"Authentification auprès de Garmin Connect pour {email}...")
-        garmin = Garmin(email, password)
-        garmin.login()
-        # Sauvegarde des tokens pour la prochaine fois
-        garmin.garth.dump(TOKEN_DIR)
-        logger.info("Connexion réussie et tokens de session enregistrés.")
-        return garmin
-    except GarminConnectAuthenticationError as auth_err:
-        logger.error(f"Erreur d'identifiants Garmin : {auth_err}")
+    if not email or not password:
+        logger.error("Erreur : GARMIN_EMAIL et GARMIN_PASSWORD doivent être définis !")
         sys.exit(1)
-    except Exception as e:
-        logger.error(f"Erreur imprévue lors de la connexion Garmin : {e}")
-        sys.exit(1)
+
+    # 2. Authentification avec simulation navigateur et retries
+    max_retries = 3
+    for attempt in range(1, max_retries + 1):
+        try:
+            logger.info(f"Connexion Garmin pour {email} (Tentative {attempt}/{max_retries} avec User-Agent Chrome)...")
+            
+            # Essai 1 via garth direct
+            try:
+                garth.login(email, password)
+                garmin = Garmin()
+                garmin.garth = garth.client
+            except Exception:
+                # Essai 2 via garminconnect
+                garmin = Garmin(email, password)
+                garmin.login()
+
+            # Sauvegarde des tokens pour les exécutions futures
+            if hasattr(garmin, "garth") and garmin.garth is not None:
+                try:
+                    garmin.garth.dump(str(TOKEN_DIR))
+                    logger.info("Connexion réussie et tokens enregistrés !")
+                except Exception:
+                    pass
+            return garmin
+
+        except GarminConnectAuthenticationError as auth_err:
+            logger.error(f"Identifiants Garmin incorrects : {auth_err}")
+            sys.exit(1)
+        except Exception as e:
+            logger.warning(f"Avertissement lors de la tentative {attempt} : {e}")
+            if attempt < max_retries:
+                import time
+                time.sleep( attempt * 5 )
+            else:
+                logger.error(f"Échec de connexion après {max_retries} tentatives : {e}")
+                sys.exit(1)
 
 def fetch_courses(garmin):
     """Récupère tous les parcours enregistrés avec export GPX & FIT."""
