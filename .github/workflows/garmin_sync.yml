@@ -34,10 +34,16 @@ jobs:
           GARMIN_EMAIL: ${{ secrets.GARMIN_EMAIL }}
           GARMIN_PASSWORD: ${{ secrets.GARMIN_PASSWORD }}
         run: python fetch_garmin.py
-
-      - name: Commiter et Pousser les modifications (data.json + GPX)
+        - name: Commiter et Pousser les modifications
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add data.json gpx/
-          git diff --quiet && git diff --staged --quiet || (git commit -m "update: Mises à jour des données et traces GPX Garmin" && git push)
+          
+          # S'assure que les dossiers existent pour éviter les erreurs Git
+          mkdir -p gpx courses
+          
+          # Ajoute les fichiers générés (silencieusement si certains sont absents)
+          git add data.json courses_index.json gpx/ courses/ 2>/dev/null || true
+          
+          # Commit seulement s'il y a des changements
+          git diff --quiet && git diff --staged --quiet || (git commit -m "update: Données Garmin" && git push)
