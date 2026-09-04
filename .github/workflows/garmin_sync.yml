@@ -43,6 +43,8 @@ jobs:
         run: |
           git config --global user.name "Garmin Sync Bot"
           git config --global user.email "bot@github-actions.com"
+          git fetch origin main || true
+          git pull --rebase origin main || true
           git add data/ .garminconnect/ || true
           git status
-          git diff --staged --quiet || (git commit -m "Auto-sync Garmin GPX/FIT [$(date -u +'%Y-%m-%d %H:%M')]" && git push)
+          git diff --staged --quiet || (git commit -m "Auto-sync Garmin GPX/FIT [$(date -u +'%Y-%m-%d %H:%M')]" && git push origin HEAD:main)
