@@ -1,0 +1,50 @@
+{
+  "workoutId": 1552450089,
+  "ownerId": 135385100,
+  "workoutName": "Run Walk Run®",
+  "description": "Échauffement, Run Walk Run®, récupération.",
+  "updateDate": "2026-04-30T06:13:31.0",
+  "createdDate": "2026-04-30T06:13:31.0",
+  "sportType": {
+    "sportTypeId": 1,
+    "sportTypeKey": "running",
+    "displayOrder": 1
+  },
+  "trainingPlanId": null,
+  "author": {
+    "userProfilePk": null,
+    "displayName": null,
+    "fullName": null,
+    "profileImgNameLarge": null,
+    "profileImgNameMedium": null,
+    "profileImgNameSmall": null,
+    "userPro": false,
+    "vivokidUser": false
+  },
+  "estimatedDurationInSecs": null,
+  "estimatedDistanceInMeters": null,
+  "estimateType": null,
+  "estimatedDistanceUnit": {
+    "unitId": null,
+    "unitKey": null,
+    "factor": null
+  },
+  "poolLength": 0.0,
+  "poolLengthUnit": {
+    "unitId": null,
+    "unitKey": null,
+    "factor": null
+  },
+  "workoutProvider": null,
+  "workoutSourceId": null,
+  "consumer": null,
+  "atpPlanId": 1777063349,
+  "workoutNameI18nKey": null,
+  "descriptionI18nKey": null,
+  "workoutThumbnailUrl": null,
+  "specializedWorkoutCategories": [
+    "ATP"
+  ],
+  "shared": false,
+  "estimated": true
+}

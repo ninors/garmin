@@ -1,0 +1,47 @@
+{
+  "workoutId": 1569982997,
+  "ownerId": 135385100,
+  "workoutName": "Copie de 10 minutes, poids du corps, maximum de tours/répétitions possibles",
+  "description": "Une routine d'entraînement de musculation que vous pouvez faire n'importe où. Effectuer autant de tours que possible en 10 minutes.",
+  "updateDate": "2026-05-17T09:19:30.0",
+  "createdDate": "2026-05-17T09:19:30.0",
+  "sportType": {
+    "sportTypeId": 9,
+    "sportTypeKey": "hiit",
+    "displayOrder": 7
+  },
+  "trainingPlanId": null,
+  "author": {
+    "userProfilePk": null,
+    "displayName": null,
+    "fullName": null,
+    "profileImgNameLarge": null,
+    "profileImgNameMedium": null,
+    "profileImgNameSmall": null,
+    "userPro": false,
+    "vivokidUser": false
+  },
+  "estimatedDurationInSecs": 600,
+  "estimatedDistanceInMeters": null,
+  "estimateType": null,
+  "estimatedDistanceUnit": {
+    "unitId": null,
+    "unitKey": null,
+    "factor": null
+  },
+  "poolLength": 0.0,
+  "poolLengthUnit": {
+    "unitId": null,
+    "unitKey": null,
+    "factor": null
+  },
+  "workoutProvider": "Garmin",
+  "workoutSourceId": "GGeycJW",
+  "consumer": null,
+  "atpPlanId": null,
+  "workoutNameI18nKey": null,
+  "descriptionI18nKey": null,
+  "workoutThumbnailUrl": null,
+  "shared": false,
+  "estimated": true
+}

@@ -1,0 +1,47 @@
+{
+  "workoutId": 1569984053,
+  "ownerId": 135385100,
+  "workoutName": "Copie de 5 minutes intensives",
+  "description": "Cinq exercices en cinq minutes. Essayer de faire le plus de répétitions possible en une minute pour chaque mouvement. Vous pouvez suivre vos efforts et essayer de battre votre record de répétitions à chaque exercice !",
+  "updateDate": "2026-05-17T09:21:02.0",
+  "createdDate": "2026-05-17T09:21:02.0",
+  "sportType": {
+    "sportTypeId": 9,
+    "sportTypeKey": "hiit",
+    "displayOrder": 7
+  },
+  "trainingPlanId": null,
+  "author": {
+    "userProfilePk": null,
+    "displayName": null,
+    "fullName": null,
+    "profileImgNameLarge": null,
+    "profileImgNameMedium": null,
+    "profileImgNameSmall": null,
+    "userPro": false,
+    "vivokidUser": false
+  },
+  "estimatedDurationInSecs": 300,
+  "estimatedDistanceInMeters": null,
+  "estimateType": null,
+  "estimatedDistanceUnit": {
+    "unitId": null,
+    "unitKey": null,
+    "factor": null
+  },
+  "poolLength": 0.0,
+  "poolLengthUnit": {
+    "unitId": null,
+    "unitKey": null,
+    "factor": null
+  },
+  "workoutProvider": "Garmin",
+  "workoutSourceId": "GGyWDEj",
+  "consumer": null,
+  "atpPlanId": null,
+  "workoutNameI18nKey": null,
+  "descriptionI18nKey": null,
+  "workoutThumbnailUrl": null,
+  "shared": false,
+  "estimated": true
+}

@@ -1,0 +1,50 @@
+{
+  "workoutId": 1546449895,
+  "ownerId": 135385100,
+  "workoutName": "Course de référence",
+  "description": "Échauffement, course et marche en produisant un gros effort, récupération.",
+  "updateDate": "2026-04-24T20:42:29.0",
+  "createdDate": "2026-04-24T20:42:29.0",
+  "sportType": {
+    "sportTypeId": 1,
+    "sportTypeKey": "running",
+    "displayOrder": 1
+  },
+  "trainingPlanId": null,
+  "author": {
+    "userProfilePk": null,
+    "displayName": null,
+    "fullName": null,
+    "profileImgNameLarge": null,
+    "profileImgNameMedium": null,
+    "profileImgNameSmall": null,
+    "userPro": false,
+    "vivokidUser": false
+  },
+  "estimatedDurationInSecs": 540,
+  "estimatedDistanceInMeters": null,
+  "estimateType": null,
+  "estimatedDistanceUnit": {
+    "unitId": null,
+    "unitKey": null,
+    "factor": null
+  },
+  "poolLength": 0.0,
+  "poolLengthUnit": {
+    "unitId": null,
+    "unitKey": null,
+    "factor": null
+  },
+  "workoutProvider": null,
+  "workoutSourceId": null,
+  "consumer": null,
+  "atpPlanId": 1777063349,
+  "workoutNameI18nKey": null,
+  "descriptionI18nKey": null,
+  "workoutThumbnailUrl": null,
+  "specializedWorkoutCategories": [
+    "ATP"
+  ],
+  "shared": false,
+  "estimated": true
+}

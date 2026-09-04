@@ -1,0 +1,345 @@
+{
+  "last_sync": "2026-09-04T17:09:52.699682",
+  "total_courses": 0,
+  "total_workouts": 12,
+  "total_activities": 25,
+  "courses": [],
+  "workouts": [
+    {
+      "id": "1569984053",
+      "name": "Copie de 5 minutes intensives",
+      "sport": "hiit",
+      "date": "2026-09-04T17:09:33.089436",
+      "file_path": "data/workouts/Copie_de_5_minutes_intensives_1569984053.json"
+    },
+    {
+      "id": "1569982997",
+      "name": "Copie de 10 minutes, poids du corps, maximum de tours/répétitions possibles",
+      "sport": "hiit",
+      "date": "2026-09-04T17:09:33.193420",
+      "file_path": "data/workouts/Copie_de_10_minutes__poids_du_corps__maximum_de_tours_répéti_1569982997.json"
+    },
+    {
+      "id": "1560037295",
+      "name": "Magic Half-Mile",
+      "sport": "running",
+      "date": "2026-09-04T17:09:33.322598",
+      "file_path": "data/workouts/Magic_Half-Mile_1560037295.json"
+    },
+    {
+      "id": "1559220036",
+      "name": "Exercice d'entraînement",
+      "sport": "running",
+      "date": "2026-09-04T17:09:33.451091",
+      "file_path": "data/workouts/Exercice_d_entraînement_1559220036.json"
+    },
+    {
+      "id": "1556916307",
+      "name": "Exercice d'entraînement",
+      "sport": "running",
+      "date": "2026-09-04T17:09:33.559670",
+      "file_path": "data/workouts/Exercice_d_entraînement_1556916307.json"
+    },
+    {
+      "id": "1552450089",
+      "name": "Run Walk Run®",
+      "sport": "running",
+      "date": "2026-09-04T17:09:33.699018",
+      "file_path": "data/workouts/Run_Walk_Run__1552450089.json"
+    },
+    {
+      "id": "1551612820",
+      "name": "Exercice d'entraînement",
+      "sport": "running",
+      "date": "2026-09-04T17:09:33.846945",
+      "file_path": "data/workouts/Exercice_d_entraînement_1551612820.json"
+    },
+    {
+      "id": "1546961306",
+      "name": "Exercice d'entraînement",
+      "sport": "running",
+      "date": "2026-09-04T17:09:33.964279",
+      "file_path": "data/workouts/Exercice_d_entraînement_1546961306.json"
+    },
+    {
+      "id": "1546961307",
+      "name": "Run Walk Run®",
+      "sport": "running",
+      "date": "2026-09-04T17:09:34.074100",
+      "file_path": "data/workouts/Run_Walk_Run__1546961307.json"
+    },
+    {
+      "id": "1546961308",
+      "name": "Exercice d'entraînement",
+      "sport": "running",
+      "date": "2026-09-04T17:09:34.177943",
+      "file_path": "data/workouts/Exercice_d_entraînement_1546961308.json"
+    },
+    {
+      "id": "1546449895",
+      "name": "Course de référence",
+      "sport": "running",
+      "date": "2026-09-04T17:09:34.285203",
+      "file_path": "data/workouts/Course_de_référence_1546449895.json"
+    },
+    {
+      "id": "1319379061",
+      "name": "Course de référence",
+      "sport": "running",
+      "date": "2026-09-04T17:09:34.390155",
+      "file_path": "data/workouts/Course_de_référence_1319379061.json"
+    }
+  ],
+  "activities": [
+    {
+      "id": "24213279851",
+      "name": "Vitré - Base",
+      "type": "running",
+      "distance_km": 5.46,
+      "duration_min": 37.8,
+      "date": "2026-09-02 18:08:22",
+      "gpx_path": "data/activities/gpx/Vitré_-_Base_24213279851.gpx",
+      "fit_path": "data/activities/fit/Vitré_-_Base_24213279851.zip"
+    },
+    {
+      "id": "24148183610",
+      "name": "Cyclisme",
+      "type": "cycling",
+      "distance_km": 0,
+      "duration_min": 0.1,
+      "date": "2026-08-28 14:50:39",
+      "gpx_path": "data/activities/gpx/Cyclisme_24148183610.gpx",
+      "fit_path": "data/activities/fit/Cyclisme_24148183610.zip"
+    },
+    {
+      "id": "24148082087",
+      "name": "Natation",
+      "type": "swimming",
+      "distance_km": 0,
+      "duration_min": 0.3,
+      "date": "2026-08-28 14:50:16",
+      "gpx_path": "data/activities/gpx/Natation_24148082087.gpx",
+      "fit_path": "data/activities/fit/Natation_24148082087.zip"
+    },
+    {
+      "id": "24075695081",
+      "name": "Cancale Voile",
+      "type": "other",
+      "distance_km": 24.13,
+      "duration_min": 103.8,
+      "date": "2026-08-22 16:37:05",
+      "gpx_path": "data/activities/gpx/Cancale_Voile_24075695081.gpx",
+      "fit_path": "data/activities/fit/Cancale_Voile_24075695081.zip"
+    },
+    {
+      "id": "24034836763",
+      "name": "Cancale Voile",
+      "type": "other",
+      "distance_km": 21.87,
+      "duration_min": 140.5,
+      "date": "2026-08-19 09:49:03",
+      "gpx_path": "data/activities/gpx/Cancale_Voile_24034836763.gpx",
+      "fit_path": "data/activities/fit/Cancale_Voile_24034836763.zip"
+    },
+    {
+      "id": "23886361679",
+      "name": "Saint-Gervais-les-Bains Randonnée",
+      "type": "hiking",
+      "distance_km": 4.91,
+      "duration_min": 103.0,
+      "date": "2026-08-07 12:15:50",
+      "gpx_path": "data/activities/gpx/Saint-Gervais-les-Bains_Randonnée_23886361679.gpx",
+      "fit_path": "data/activities/fit/Saint-Gervais-les-Bains_Randonnée_23886361679.zip"
+    },
+    {
+      "id": "23884249298",
+      "name": "Méditation",
+      "type": "meditation",
+      "distance_km": 0,
+      "duration_min": 10.0,
+      "date": "2026-08-07 00:03:56",
+      "gpx_path": "data/activities/gpx/Méditation_23884249298.gpx",
+      "fit_path": "data/activities/fit/Méditation_23884249298.zip"
+    },
+    {
+      "id": "23813913495",
+      "name": "Vallorcine Randonnée",
+      "type": "hiking",
+      "distance_km": 7.88,
+      "duration_min": 193.6,
+      "date": "2026-08-01 13:59:04",
+      "gpx_path": "data/activities/gpx/Vallorcine_Randonnée_23813913495.gpx",
+      "fit_path": "data/activities/fit/Vallorcine_Randonnée_23813913495.zip"
+    },
+    {
+      "id": "23801773819",
+      "name": "Passy Randonnée",
+      "type": "hiking",
+      "distance_km": 7.7,
+      "duration_min": 200.5,
+      "date": "2026-07-31 13:19:38",
+      "gpx_path": "data/activities/gpx/Passy_Randonnée_23801773819.gpx",
+      "fit_path": "data/activities/fit/Passy_Randonnée_23801773819.zip"
+    },
+    {
+      "id": "23780361658",
+      "name": "Les Houches Randonnée",
+      "type": "hiking",
+      "distance_km": 6.83,
+      "duration_min": 132.3,
+      "date": "2026-07-29 14:52:03",
+      "gpx_path": "data/activities/gpx/Les_Houches_Randonnée_23780361658.gpx",
+      "fit_path": "data/activities/fit/Les_Houches_Randonnée_23780361658.zip"
+    },
+    {
+      "id": "23775953575",
+      "name": "Passy Parapente",
+      "type": "other",
+      "distance_km": 5.55,
+      "duration_min": 22.0,
+      "date": "2026-07-29 13:02:13",
+      "gpx_path": "data/activities/gpx/Passy_Parapente_23775953575.gpx",
+      "fit_path": "data/activities/fit/Passy_Parapente_23775953575.zip"
+    },
+    {
+      "id": "23764041617",
+      "name": "Saint-Gervais-les-Bains Randonnée",
+      "type": "hiking",
+      "distance_km": 6.83,
+      "duration_min": 194.5,
+      "date": "2026-07-28 12:57:24",
+      "gpx_path": "data/activities/gpx/Saint-Gervais-les-Bains_Randonnée_23764041617.gpx",
+      "fit_path": "data/activities/fit/Saint-Gervais-les-Bains_Randonnée_23764041617.zip"
+    },
+    {
+      "id": "23751272853",
+      "name": "Saint-Gervais-les-Bains Randonnée",
+      "type": "hiking",
+      "distance_km": 7.33,
+      "duration_min": 151.0,
+      "date": "2026-07-27 14:18:32",
+      "gpx_path": "data/activities/gpx/Saint-Gervais-les-Bains_Randonnée_23751272853.gpx",
+      "fit_path": "data/activities/fit/Saint-Gervais-les-Bains_Randonnée_23751272853.zip"
+    },
+    {
+      "id": "23680106194",
+      "name": "Vitré Cyclisme",
+      "type": "cycling",
+      "distance_km": 44.58,
+      "duration_min": 153.1,
+      "date": "2026-07-21 13:43:30",
+      "gpx_path": "data/activities/gpx/Vitré_Cyclisme_23680106194.gpx",
+      "fit_path": "data/activities/fit/Vitré_Cyclisme_23680106194.zip"
+    },
+    {
+      "id": "23632597820",
+      "name": "Taillis Cyclisme",
+      "type": "cycling",
+      "distance_km": 44.08,
+      "duration_min": 149.2,
+      "date": "2026-07-17 14:06:35",
+      "gpx_path": "data/activities/gpx/Taillis_Cyclisme_23632597820.gpx",
+      "fit_path": "data/activities/fit/Taillis_Cyclisme_23632597820.zip"
+    },
+    {
+      "id": "23623858596",
+      "name": "Vitré Cyclisme",
+      "type": "cycling",
+      "distance_km": 8.3,
+      "duration_min": 26.0,
+      "date": "2026-07-16 14:21:09",
+      "gpx_path": "data/activities/gpx/Vitré_Cyclisme_23623858596.gpx",
+      "fit_path": "data/activities/fit/Vitré_Cyclisme_23623858596.zip"
+    },
+    {
+      "id": "23583396765",
+      "name": "Pluneret Marche à pied",
+      "type": "walking",
+      "distance_km": 2.23,
+      "duration_min": 39.0,
+      "date": "2026-07-13 17:17:42",
+      "gpx_path": "data/activities/gpx/Pluneret_Marche_à_pied_23583396765.gpx",
+      "fit_path": "data/activities/fit/Pluneret_Marche_à_pied_23583396765.zip"
+    },
+    {
+      "id": "23434796529",
+      "name": "Montreuil-sous-Pérouse - Base",
+      "type": "running",
+      "distance_km": 4.53,
+      "duration_min": 24.7,
+      "date": "2026-06-30 21:57:31",
+      "gpx_path": "data/activities/gpx/Montreuil-sous-Pérouse_-_Base_23434796529.gpx",
+      "fit_path": "data/activities/fit/Montreuil-sous-Pérouse_-_Base_23434796529.zip"
+    },
+    {
+      "id": "23430273647",
+      "name": "Vitré Tennis",
+      "type": "tennis_v2",
+      "distance_km": 2.56,
+      "duration_min": 40.9,
+      "date": "2026-06-30 15:02:53",
+      "gpx_path": "data/activities/gpx/Vitré_Tennis_23430273647.gpx",
+      "fit_path": "data/activities/fit/Vitré_Tennis_23430273647.zip"
+    },
+    {
+      "id": "23328280367",
+      "name": "Cancale Cyclisme",
+      "type": "cycling",
+      "distance_km": 4.88,
+      "duration_min": 15.8,
+      "date": "2026-06-21 13:53:03",
+      "gpx_path": "data/activities/gpx/Cancale_Cyclisme_23328280367.gpx",
+      "fit_path": "data/activities/fit/Cancale_Cyclisme_23328280367.zip"
+    },
+    {
+      "id": "23308378965",
+      "name": "Vitré Cyclisme",
+      "type": "cycling",
+      "distance_km": 3.09,
+      "duration_min": 10.1,
+      "date": "2026-06-19 19:04:31",
+      "gpx_path": "data/activities/gpx/Vitré_Cyclisme_23308378965.gpx",
+      "fit_path": "data/activities/fit/Vitré_Cyclisme_23308378965.zip"
+    },
+    {
+      "id": "23253280995",
+      "name": "Détente et concentration (cour",
+      "type": "breathwork",
+      "distance_km": 0,
+      "duration_min": 5.6,
+      "date": "2026-06-14 23:37:23",
+      "gpx_path": "data/activities/gpx/Détente_et_concentration__cour_23253280995.gpx",
+      "fit_path": "data/activities/fit/Détente_et_concentration__cour_23253280995.zip"
+    },
+    {
+      "id": "23200582456",
+      "name": "Pontorson Cyclisme",
+      "type": "cycling",
+      "distance_km": 9.79,
+      "duration_min": 30.2,
+      "date": "2026-06-10 09:12:30",
+      "gpx_path": "data/activities/gpx/Pontorson_Cyclisme_23200582456.gpx",
+      "fit_path": "data/activities/fit/Pontorson_Cyclisme_23200582456.zip"
+    },
+    {
+      "id": "23188176944",
+      "name": "Fougères Cyclisme",
+      "type": "cycling",
+      "distance_km": 46.04,
+      "duration_min": 153.0,
+      "date": "2026-06-09 09:08:41",
+      "gpx_path": "data/activities/gpx/Fougères_Cyclisme_23188176944.gpx",
+      "fit_path": "data/activities/fit/Fougères_Cyclisme_23188176944.zip"
+    },
+    {
+      "id": "23175891228",
+      "name": "Vitré Cyclisme",
+      "type": "cycling",
+      "distance_km": 36.47,
+      "duration_min": 121.4,
+      "date": "2026-06-08 09:49:52",
+      "gpx_path": "data/activities/gpx/Vitré_Cyclisme_23175891228.gpx",
+      "fit_path": "data/activities/fit/Vitré_Cyclisme_23175891228.zip"
+    }
+  ]
+}
