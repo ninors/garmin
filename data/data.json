@@ -1,5 +1,5 @@
 {
-  "last_sync": "2026-09-06T08:36:00.142987",
+  "last_sync": "2026-09-13T09:26:41.846464",
   "total_courses": 0,
   "total_workouts": 12,
   "total_activities": 25,
@@ -9,88 +9,128 @@
       "id": "1569984053",
       "name": "Copie de 5 minutes intensives",
       "sport": "hiit",
-      "date": "2026-09-06T08:35:38.825470",
+      "date": "2026-09-13T09:26:20.153796",
       "file_path": "data/workouts/Copie_de_5_minutes_intensives_1569984053.json"
     },
     {
       "id": "1569982997",
       "name": "Copie de 10 minutes, poids du corps, maximum de tours/répétitions possibles",
       "sport": "hiit",
-      "date": "2026-09-06T08:35:38.951715",
+      "date": "2026-09-13T09:26:20.284646",
       "file_path": "data/workouts/Copie_de_10_minutes__poids_du_corps__maximum_de_tours_répéti_1569982997.json"
     },
     {
       "id": "1560037295",
       "name": "Magic Half-Mile",
       "sport": "running",
-      "date": "2026-09-06T08:35:39.088628",
+      "date": "2026-09-13T09:26:21.250059",
       "file_path": "data/workouts/Magic_Half-Mile_1560037295.json"
     },
     {
       "id": "1559220036",
       "name": "Exercice d'entraînement",
       "sport": "running",
-      "date": "2026-09-06T08:35:39.214454",
+      "date": "2026-09-13T09:26:21.367759",
       "file_path": "data/workouts/Exercice_d_entraînement_1559220036.json"
     },
     {
       "id": "1556916307",
       "name": "Exercice d'entraînement",
       "sport": "running",
-      "date": "2026-09-06T08:35:39.351328",
+      "date": "2026-09-13T09:26:21.468307",
       "file_path": "data/workouts/Exercice_d_entraînement_1556916307.json"
     },
     {
       "id": "1552450089",
       "name": "Run Walk Run®",
       "sport": "running",
-      "date": "2026-09-06T08:35:39.499338",
+      "date": "2026-09-13T09:26:21.836866",
       "file_path": "data/workouts/Run_Walk_Run__1552450089.json"
     },
     {
       "id": "1551612820",
       "name": "Exercice d'entraînement",
       "sport": "running",
-      "date": "2026-09-06T08:35:39.631603",
+      "date": "2026-09-13T09:26:22.037436",
       "file_path": "data/workouts/Exercice_d_entraînement_1551612820.json"
     },
     {
       "id": "1546961308",
       "name": "Exercice d'entraînement",
       "sport": "running",
-      "date": "2026-09-06T08:35:39.766868",
+      "date": "2026-09-13T09:26:22.144409",
       "file_path": "data/workouts/Exercice_d_entraînement_1546961308.json"
     },
     {
       "id": "1546961307",
       "name": "Run Walk Run®",
       "sport": "running",
-      "date": "2026-09-06T08:35:39.898147",
+      "date": "2026-09-13T09:26:22.263146",
       "file_path": "data/workouts/Run_Walk_Run__1546961307.json"
     },
     {
       "id": "1546961306",
       "name": "Exercice d'entraînement",
       "sport": "running",
-      "date": "2026-09-06T08:35:40.026398",
+      "date": "2026-09-13T09:26:22.387910",
       "file_path": "data/workouts/Exercice_d_entraînement_1546961306.json"
     },
     {
       "id": "1546449895",
       "name": "Course de référence",
       "sport": "running",
-      "date": "2026-09-06T08:35:40.138313",
+      "date": "2026-09-13T09:26:22.493945",
       "file_path": "data/workouts/Course_de_référence_1546449895.json"
     },
     {
       "id": "1319379061",
       "name": "Course de référence",
       "sport": "running",
-      "date": "2026-09-06T08:35:40.267795",
+      "date": "2026-09-13T09:26:22.609117",
       "file_path": "data/workouts/Course_de_référence_1319379061.json"
     }
   ],
   "activities": [
+    {
+      "id": "24325246485",
+      "name": "Nat. piscine",
+      "type": "lap_swimming",
+      "distance_km": 1.88,
+      "duration_min": 69.3,
+      "date": "2026-09-11 19:31:00",
+      "gpx_path": "data/activities/gpx/Nat__piscine_24325246485.gpx",
+      "fit_path": "data/activities/fit/Nat__piscine_24325246485.zip"
+    },
+    {
+      "id": "24298309549",
+      "name": "Vitré - Base",
+      "type": "running",
+      "distance_km": 6.22,
+      "duration_min": 31.8,
+      "date": "2026-09-09 16:56:12",
+      "gpx_path": "data/activities/gpx/Vitré_-_Base_24298309549.gpx",
+      "fit_path": "data/activities/fit/Vitré_-_Base_24298309549.zip"
+    },
+    {
+      "id": "24288273426",
+      "name": "Vitré Course à pied urbaine",
+      "type": "street_running",
+      "distance_km": 2.67,
+      "duration_min": 15.2,
+      "date": "2026-09-08 20:30:14",
+      "gpx_path": "data/activities/gpx/Vitré_Course_à_pied_urbaine_24288273426.gpx",
+      "fit_path": "data/activities/fit/Vitré_Course_à_pied_urbaine_24288273426.zip"
+    },
+    {
+      "id": "24261604485",
+      "name": "Cancale Natation en eau libre",
+      "type": "open_water_swimming",
+      "distance_km": 0.22,
+      "duration_min": 5.2,
+      "date": "2026-09-06 17:09:36",
+      "gpx_path": "data/activities/gpx/Cancale_Natation_en_eau_libre_24261604485.gpx",
+      "fit_path": "data/activities/fit/Cancale_Natation_en_eau_libre_24261604485.zip"
+    },
     {
       "id": "24213279851",
       "name": "Vitré - Base",
@@ -300,46 +340,6 @@
       "date": "2026-06-19 19:04:31",
       "gpx_path": "data/activities/gpx/Vitré_Cyclisme_23308378965.gpx",
       "fit_path": "data/activities/fit/Vitré_Cyclisme_23308378965.zip"
-    },
-    {
-      "id": "23253280995",
-      "name": "Détente et concentration (cour",
-      "type": "breathwork",
-      "distance_km": 0,
-      "duration_min": 5.6,
-      "date": "2026-06-14 23:37:23",
-      "gpx_path": "data/activities/gpx/Détente_et_concentration__cour_23253280995.gpx",
-      "fit_path": "data/activities/fit/Détente_et_concentration__cour_23253280995.zip"
-    },
-    {
-      "id": "23200582456",
-      "name": "Pontorson Cyclisme",
-      "type": "cycling",
-      "distance_km": 9.79,
-      "duration_min": 30.2,
-      "date": "2026-06-10 09:12:30",
-      "gpx_path": "data/activities/gpx/Pontorson_Cyclisme_23200582456.gpx",
-      "fit_path": "data/activities/fit/Pontorson_Cyclisme_23200582456.zip"
-    },
-    {
-      "id": "23188176944",
-      "name": "Fougères Cyclisme",
-      "type": "cycling",
-      "distance_km": 46.04,
-      "duration_min": 153.0,
-      "date": "2026-06-09 09:08:41",
-      "gpx_path": "data/activities/gpx/Fougères_Cyclisme_23188176944.gpx",
-      "fit_path": "data/activities/fit/Fougères_Cyclisme_23188176944.zip"
-    },
-    {
-      "id": "23175891228",
-      "name": "Vitré Cyclisme",
-      "type": "cycling",
-      "distance_km": 36.47,
-      "duration_min": 121.4,
-      "date": "2026-06-08 09:49:52",
-      "gpx_path": "data/activities/gpx/Vitré_Cyclisme_23175891228.gpx",
-      "fit_path": "data/activities/fit/Vitré_Cyclisme_23175891228.zip"
     }
   ]
 }
