@@ -1,0 +1,47 @@
+{
+  "workoutId": 1709830118,
+  "ownerId": 135385100,
+  "workoutName": "Remodelez votre corps à l'aide de simples haltères",
+  "description": "Parfois mieux vaut suivre le principe KISS : « Keep it Simple, Stupid », c'est-à-dire ne compliquez pas les choses inutilement. En salle de sport, un lieu rempli de machines et de matériel en tout genre, garder ce précepte à l'esprit peut grandement vous aider à simplifier votre approche dans le but d'obtenir le corps tant désiré. C'est ce que ce programme se propose de faire. Il ne demande que l'utilisation de simples haltères, mais permet à votre corps de travailler comme il en a besoin sans l'embrouiller.",
+  "updateDate": "2026-09-26T11:44:59.0",
+  "createdDate": "2026-09-26T11:44:59.0",
+  "sportType": {
+    "sportTypeId": 5,
+    "sportTypeKey": "strength_training",
+    "displayOrder": 4
+  },
+  "trainingPlanId": null,
+  "author": {
+    "userProfilePk": null,
+    "displayName": null,
+    "fullName": null,
+    "profileImgNameLarge": null,
+    "profileImgNameMedium": null,
+    "profileImgNameSmall": null,
+    "userPro": false,
+    "vivokidUser": false
+  },
+  "estimatedDurationInSecs": 900,
+  "estimatedDistanceInMeters": null,
+  "estimateType": null,
+  "estimatedDistanceUnit": {
+    "unitId": null,
+    "unitKey": null,
+    "factor": null
+  },
+  "poolLength": 0.0,
+  "poolLengthUnit": {
+    "unitId": 1,
+    "unitKey": "meter",
+    "factor": 100.0
+  },
+  "workoutProvider": "MSN",
+  "workoutSourceId": "BBtObWr",
+  "consumer": null,
+  "atpPlanId": null,
+  "workoutNameI18nKey": null,
+  "descriptionI18nKey": null,
+  "workoutThumbnailUrl": null,
+  "shared": false,
+  "estimated": true
+}

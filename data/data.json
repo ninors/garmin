@@ -1,96 +1,160 @@
 {
-  "last_sync": "2026-09-20T09:13:58.651795",
+  "last_sync": "2026-09-27T09:57:20.683361",
   "total_courses": 0,
-  "total_workouts": 12,
+  "total_workouts": 14,
   "total_activities": 25,
   "courses": [],
   "workouts": [
     {
+      "id": "1709830118",
+      "name": "Remodelez votre corps à l'aide de simples haltères",
+      "sport": "strength_training",
+      "date": "2026-09-27T09:57:03.322269",
+      "file_path": "data/workouts/Remodelez_votre_corps_à_l_aide_de_simples_haltères_1709830118.json"
+    },
+    {
+      "id": "1709829425",
+      "name": "15 minutes d'entraînement du corps entier",
+      "sport": "cardio_training",
+      "date": "2026-09-27T09:57:03.440757",
+      "file_path": "data/workouts/15_minutes_d_entraînement_du_corps_entier_1709829425.json"
+    },
+    {
       "id": "1569984053",
       "name": "Copie de 5 minutes intensives",
       "sport": "hiit",
-      "date": "2026-09-20T09:13:37.350120",
+      "date": "2026-09-27T09:57:03.764795",
       "file_path": "data/workouts/Copie_de_5_minutes_intensives_1569984053.json"
     },
     {
       "id": "1569982997",
       "name": "Copie de 10 minutes, poids du corps, maximum de tours/répétitions possibles",
       "sport": "hiit",
-      "date": "2026-09-20T09:13:37.476484",
+      "date": "2026-09-27T09:57:03.867583",
       "file_path": "data/workouts/Copie_de_10_minutes__poids_du_corps__maximum_de_tours_répéti_1569982997.json"
     },
     {
       "id": "1560037295",
       "name": "Magic Half-Mile",
       "sport": "running",
-      "date": "2026-09-20T09:13:37.613099",
+      "date": "2026-09-27T09:57:03.991532",
       "file_path": "data/workouts/Magic_Half-Mile_1560037295.json"
     },
     {
       "id": "1559220036",
       "name": "Exercice d'entraînement",
       "sport": "running",
-      "date": "2026-09-20T09:13:37.752245",
+      "date": "2026-09-27T09:57:04.100188",
       "file_path": "data/workouts/Exercice_d_entraînement_1559220036.json"
     },
     {
       "id": "1556916307",
       "name": "Exercice d'entraînement",
       "sport": "running",
-      "date": "2026-09-20T09:13:37.884544",
+      "date": "2026-09-27T09:57:04.200003",
       "file_path": "data/workouts/Exercice_d_entraînement_1556916307.json"
     },
     {
       "id": "1552450089",
       "name": "Run Walk Run®",
       "sport": "running",
-      "date": "2026-09-20T09:13:38.033788",
+      "date": "2026-09-27T09:57:04.295319",
       "file_path": "data/workouts/Run_Walk_Run__1552450089.json"
     },
     {
       "id": "1551612820",
       "name": "Exercice d'entraînement",
       "sport": "running",
-      "date": "2026-09-20T09:13:38.173881",
+      "date": "2026-09-27T09:57:04.394424",
       "file_path": "data/workouts/Exercice_d_entraînement_1551612820.json"
     },
     {
       "id": "1546961308",
       "name": "Exercice d'entraînement",
       "sport": "running",
-      "date": "2026-09-20T09:13:38.331089",
+      "date": "2026-09-27T09:57:04.496240",
       "file_path": "data/workouts/Exercice_d_entraînement_1546961308.json"
     },
     {
       "id": "1546961307",
       "name": "Run Walk Run®",
       "sport": "running",
-      "date": "2026-09-20T09:13:38.469454",
+      "date": "2026-09-27T09:57:04.590965",
       "file_path": "data/workouts/Run_Walk_Run__1546961307.json"
     },
     {
       "id": "1546961306",
       "name": "Exercice d'entraînement",
       "sport": "running",
-      "date": "2026-09-20T09:13:38.607826",
+      "date": "2026-09-27T09:57:04.699697",
       "file_path": "data/workouts/Exercice_d_entraînement_1546961306.json"
     },
     {
       "id": "1546449895",
       "name": "Course de référence",
       "sport": "running",
-      "date": "2026-09-20T09:13:38.745455",
+      "date": "2026-09-27T09:57:04.797280",
       "file_path": "data/workouts/Course_de_référence_1546449895.json"
     },
     {
       "id": "1319379061",
       "name": "Course de référence",
       "sport": "running",
-      "date": "2026-09-20T09:13:38.877402",
+      "date": "2026-09-27T09:57:05.683243",
       "file_path": "data/workouts/Course_de_référence_1319379061.json"
     }
   ],
   "activities": [
+    {
+      "id": "24507283816",
+      "name": "Vitré Tennis",
+      "type": "tennis_v2",
+      "distance_km": 3.72,
+      "duration_min": 74.5,
+      "date": "2026-09-26 16:19:24",
+      "gpx_path": "data/activities/gpx/Vitré_Tennis_24507283816.gpx",
+      "fit_path": "data/activities/fit/Vitré_Tennis_24507283816.zip"
+    },
+    {
+      "id": "24497405588",
+      "name": "Nat. piscine",
+      "type": "lap_swimming",
+      "distance_km": 1.5,
+      "duration_min": 63.3,
+      "date": "2026-09-25 19:35:46",
+      "gpx_path": "data/activities/gpx/Nat__piscine_24497405588.gpx",
+      "fit_path": "data/activities/fit/Nat__piscine_24497405588.zip"
+    },
+    {
+      "id": "24483725619",
+      "name": "Vitré Course à pied",
+      "type": "running",
+      "distance_km": 2.88,
+      "duration_min": 18.4,
+      "date": "2026-09-24 18:04:24",
+      "gpx_path": "data/activities/gpx/Vitré_Course_à_pied_24483725619.gpx",
+      "fit_path": "data/activities/fit/Vitré_Course_à_pied_24483725619.zip"
+    },
+    {
+      "id": "24472259311",
+      "name": "Padel",
+      "type": "paddelball",
+      "distance_km": 0.29,
+      "duration_min": 82.5,
+      "date": "2026-09-23 17:56:08",
+      "gpx_path": "data/activities/gpx/Padel_24472259311.gpx",
+      "fit_path": "data/activities/fit/Padel_24472259311.zip"
+    },
+    {
+      "id": "24433293870",
+      "name": "Cancale Natation en eau libre",
+      "type": "open_water_swimming",
+      "distance_km": 0.48,
+      "duration_min": 10.1,
+      "date": "2026-09-20 13:24:16",
+      "gpx_path": "data/activities/gpx/Cancale_Natation_en_eau_libre_24433293870.gpx",
+      "fit_path": "data/activities/fit/Cancale_Natation_en_eau_libre_24433293870.zip"
+    },
     {
       "id": "24412040348",
       "name": "Nat. piscine",
@@ -290,56 +354,6 @@
       "date": "2026-07-27 14:18:32",
       "gpx_path": "data/activities/gpx/Saint-Gervais-les-Bains_Randonnée_23751272853.gpx",
       "fit_path": "data/activities/fit/Saint-Gervais-les-Bains_Randonnée_23751272853.zip"
-    },
-    {
-      "id": "23680106194",
-      "name": "Vitré Cyclisme",
-      "type": "cycling",
-      "distance_km": 44.58,
-      "duration_min": 153.1,
-      "date": "2026-07-21 13:43:30",
-      "gpx_path": "data/activities/gpx/Vitré_Cyclisme_23680106194.gpx",
-      "fit_path": "data/activities/fit/Vitré_Cyclisme_23680106194.zip"
-    },
-    {
-      "id": "23632597820",
-      "name": "Taillis Cyclisme",
-      "type": "cycling",
-      "distance_km": 44.08,
-      "duration_min": 149.2,
-      "date": "2026-07-17 14:06:35",
-      "gpx_path": "data/activities/gpx/Taillis_Cyclisme_23632597820.gpx",
-      "fit_path": "data/activities/fit/Taillis_Cyclisme_23632597820.zip"
-    },
-    {
-      "id": "23623858596",
-      "name": "Vitré Cyclisme",
-      "type": "cycling",
-      "distance_km": 8.3,
-      "duration_min": 26.0,
-      "date": "2026-07-16 14:21:09",
-      "gpx_path": "data/activities/gpx/Vitré_Cyclisme_23623858596.gpx",
-      "fit_path": "data/activities/fit/Vitré_Cyclisme_23623858596.zip"
-    },
-    {
-      "id": "23583396765",
-      "name": "Pluneret Marche à pied",
-      "type": "walking",
-      "distance_km": 2.23,
-      "duration_min": 39.0,
-      "date": "2026-07-13 17:17:42",
-      "gpx_path": "data/activities/gpx/Pluneret_Marche_à_pied_23583396765.gpx",
-      "fit_path": "data/activities/fit/Pluneret_Marche_à_pied_23583396765.zip"
-    },
-    {
-      "id": "23434796529",
-      "name": "Montreuil-sous-Pérouse - Base",
-      "type": "running",
-      "distance_km": 4.53,
-      "duration_min": 24.7,
-      "date": "2026-06-30 21:57:31",
-      "gpx_path": "data/activities/gpx/Montreuil-sous-Pérouse_-_Base_23434796529.gpx",
-      "fit_path": "data/activities/fit/Montreuil-sous-Pérouse_-_Base_23434796529.zip"
     }
   ]
 }

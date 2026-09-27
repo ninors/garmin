@@ -1,0 +1,47 @@
+{
+  "workoutId": 1709829425,
+  "ownerId": 135385100,
+  "workoutName": "15 minutes d'entraînement du corps entier",
+  "description": "Une séance d'entraînement cardio avec un grand nombre d'exercices pour développer la force et brûler les graisses en seulement 15 minutes. Aucun équipement n'est nécessaire, vous pouvez donc transpirer n'importe où.",
+  "updateDate": "2026-09-26T11:43:49.0",
+  "createdDate": "2026-09-26T11:43:49.0",
+  "sportType": {
+    "sportTypeId": 6,
+    "sportTypeKey": "cardio_training",
+    "displayOrder": 6
+  },
+  "trainingPlanId": null,
+  "author": {
+    "userProfilePk": null,
+    "displayName": null,
+    "fullName": null,
+    "profileImgNameLarge": null,
+    "profileImgNameMedium": null,
+    "profileImgNameSmall": null,
+    "userPro": false,
+    "vivokidUser": false
+  },
+  "estimatedDurationInSecs": 900,
+  "estimatedDistanceInMeters": null,
+  "estimateType": null,
+  "estimatedDistanceUnit": {
+    "unitId": null,
+    "unitKey": null,
+    "factor": null
+  },
+  "poolLength": 0.0,
+  "poolLengthUnit": {
+    "unitId": 1,
+    "unitKey": "meter",
+    "factor": 100.0
+  },
+  "workoutProvider": "Garmin",
+  "workoutSourceId": "GGllYVt",
+  "consumer": null,
+  "atpPlanId": null,
+  "workoutNameI18nKey": null,
+  "descriptionI18nKey": null,
+  "workoutThumbnailUrl": null,
+  "shared": false,
+  "estimated": true
+}
