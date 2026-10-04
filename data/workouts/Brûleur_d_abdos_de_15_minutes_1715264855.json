@@ -1,0 +1,47 @@
+{
+  "workoutId": 1715264855,
+  "ownerId": 135385100,
+  "workoutName": "Brûleur d'abdos de 15 minutes",
+  "description": "Ressentez la brûlure avec cet entraînement de base de pilates qui cible la ceinture abdominale, les abdominaux inférieurs et les obliques. Ces mouvements de pilates activeront les muscles profonds du tronc et favoriseront l'équilibre et la stabilité afin de renforcer et de tonifier toute votre partie médiane.",
+  "updateDate": "2026-09-30T17:37:31.0",
+  "createdDate": "2026-09-30T17:37:31.0",
+  "sportType": {
+    "sportTypeId": 8,
+    "sportTypeKey": "pilates",
+    "displayOrder": 9
+  },
+  "trainingPlanId": null,
+  "author": {
+    "userProfilePk": null,
+    "displayName": null,
+    "fullName": null,
+    "profileImgNameLarge": null,
+    "profileImgNameMedium": null,
+    "profileImgNameSmall": null,
+    "userPro": false,
+    "vivokidUser": false
+  },
+  "estimatedDurationInSecs": 900,
+  "estimatedDistanceInMeters": null,
+  "estimateType": null,
+  "estimatedDistanceUnit": {
+    "unitId": null,
+    "unitKey": null,
+    "factor": null
+  },
+  "poolLength": 0.0,
+  "poolLengthUnit": {
+    "unitId": 1,
+    "unitKey": "meter",
+    "factor": 100.0
+  },
+  "workoutProvider": "Garmin",
+  "workoutSourceId": "GGpVOOe",
+  "consumer": null,
+  "atpPlanId": null,
+  "workoutNameI18nKey": null,
+  "descriptionI18nKey": null,
+  "workoutThumbnailUrl": null,
+  "shared": false,
+  "estimated": true
+}

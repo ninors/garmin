@@ -1,0 +1,47 @@
+{
+  "workoutId": 1715265835,
+  "ownerId": 135385100,
+  "workoutName": "Défi planche de 5 minutes",
+  "description": "Renforcez vos abdominaux et travaillez vos bras et vos jambes avec cet entraînement de cinq minutes pour brûler le corps entier. Cet entraînement de planche sans équipement est rapide et efficace.",
+  "updateDate": "2026-09-30T17:38:52.0",
+  "createdDate": "2026-09-30T17:38:52.0",
+  "sportType": {
+    "sportTypeId": 6,
+    "sportTypeKey": "cardio_training",
+    "displayOrder": 6
+  },
+  "trainingPlanId": null,
+  "author": {
+    "userProfilePk": null,
+    "displayName": null,
+    "fullName": null,
+    "profileImgNameLarge": null,
+    "profileImgNameMedium": null,
+    "profileImgNameSmall": null,
+    "userPro": false,
+    "vivokidUser": false
+  },
+  "estimatedDurationInSecs": 300,
+  "estimatedDistanceInMeters": null,
+  "estimateType": null,
+  "estimatedDistanceUnit": {
+    "unitId": null,
+    "unitKey": null,
+    "factor": null
+  },
+  "poolLength": 0.0,
+  "poolLengthUnit": {
+    "unitId": 1,
+    "unitKey": "meter",
+    "factor": 100.0
+  },
+  "workoutProvider": "Garmin",
+  "workoutSourceId": "GGyFrni",
+  "consumer": null,
+  "atpPlanId": null,
+  "workoutNameI18nKey": null,
+  "descriptionI18nKey": null,
+  "workoutThumbnailUrl": null,
+  "shared": false,
+  "estimated": true
+}

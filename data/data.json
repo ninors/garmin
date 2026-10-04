@@ -1,110 +1,136 @@
 {
-  "last_sync": "2026-09-27T09:57:20.683361",
+  "last_sync": "2026-10-04T10:31:38.048972",
   "total_courses": 0,
-  "total_workouts": 14,
+  "total_workouts": 12,
   "total_activities": 25,
   "courses": [],
   "workouts": [
     {
-      "id": "1709830118",
-      "name": "Remodelez votre corps à l'aide de simples haltères",
-      "sport": "strength_training",
-      "date": "2026-09-27T09:57:03.322269",
-      "file_path": "data/workouts/Remodelez_votre_corps_à_l_aide_de_simples_haltères_1709830118.json"
-    },
-    {
-      "id": "1709829425",
-      "name": "15 minutes d'entraînement du corps entier",
+      "id": "1715265835",
+      "name": "Défi planche de 5 minutes",
       "sport": "cardio_training",
-      "date": "2026-09-27T09:57:03.440757",
-      "file_path": "data/workouts/15_minutes_d_entraînement_du_corps_entier_1709829425.json"
+      "date": "2026-10-04T10:31:10.372370",
+      "file_path": "data/workouts/Défi_planche_de_5_minutes_1715265835.json"
     },
     {
-      "id": "1569984053",
-      "name": "Copie de 5 minutes intensives",
-      "sport": "hiit",
-      "date": "2026-09-27T09:57:03.764795",
-      "file_path": "data/workouts/Copie_de_5_minutes_intensives_1569984053.json"
-    },
-    {
-      "id": "1569982997",
-      "name": "Copie de 10 minutes, poids du corps, maximum de tours/répétitions possibles",
-      "sport": "hiit",
-      "date": "2026-09-27T09:57:03.867583",
-      "file_path": "data/workouts/Copie_de_10_minutes__poids_du_corps__maximum_de_tours_répéti_1569982997.json"
+      "id": "1715264855",
+      "name": "Brûleur d'abdos de 15 minutes",
+      "sport": "pilates",
+      "date": "2026-10-04T10:31:10.488212",
+      "file_path": "data/workouts/Brûleur_d_abdos_de_15_minutes_1715264855.json"
     },
     {
       "id": "1560037295",
       "name": "Magic Half-Mile",
       "sport": "running",
-      "date": "2026-09-27T09:57:03.991532",
+      "date": "2026-10-04T10:31:10.623810",
       "file_path": "data/workouts/Magic_Half-Mile_1560037295.json"
     },
     {
       "id": "1559220036",
       "name": "Exercice d'entraînement",
       "sport": "running",
-      "date": "2026-09-27T09:57:04.100188",
+      "date": "2026-10-04T10:31:10.740987",
       "file_path": "data/workouts/Exercice_d_entraînement_1559220036.json"
     },
     {
       "id": "1556916307",
       "name": "Exercice d'entraînement",
       "sport": "running",
-      "date": "2026-09-27T09:57:04.200003",
+      "date": "2026-10-04T10:31:10.866185",
       "file_path": "data/workouts/Exercice_d_entraînement_1556916307.json"
     },
     {
       "id": "1552450089",
       "name": "Run Walk Run®",
       "sport": "running",
-      "date": "2026-09-27T09:57:04.295319",
+      "date": "2026-10-04T10:31:10.985741",
       "file_path": "data/workouts/Run_Walk_Run__1552450089.json"
     },
     {
       "id": "1551612820",
       "name": "Exercice d'entraînement",
       "sport": "running",
-      "date": "2026-09-27T09:57:04.394424",
+      "date": "2026-10-04T10:31:11.097087",
       "file_path": "data/workouts/Exercice_d_entraînement_1551612820.json"
     },
     {
       "id": "1546961308",
       "name": "Exercice d'entraînement",
       "sport": "running",
-      "date": "2026-09-27T09:57:04.496240",
+      "date": "2026-10-04T10:31:11.220767",
       "file_path": "data/workouts/Exercice_d_entraînement_1546961308.json"
     },
     {
       "id": "1546961307",
       "name": "Run Walk Run®",
       "sport": "running",
-      "date": "2026-09-27T09:57:04.590965",
+      "date": "2026-10-04T10:31:11.345077",
       "file_path": "data/workouts/Run_Walk_Run__1546961307.json"
     },
     {
       "id": "1546961306",
       "name": "Exercice d'entraînement",
       "sport": "running",
-      "date": "2026-09-27T09:57:04.699697",
+      "date": "2026-10-04T10:31:11.467637",
       "file_path": "data/workouts/Exercice_d_entraînement_1546961306.json"
     },
     {
       "id": "1546449895",
       "name": "Course de référence",
       "sport": "running",
-      "date": "2026-09-27T09:57:04.797280",
+      "date": "2026-10-04T10:31:11.591455",
       "file_path": "data/workouts/Course_de_référence_1546449895.json"
     },
     {
       "id": "1319379061",
       "name": "Course de référence",
       "sport": "running",
-      "date": "2026-09-27T09:57:05.683243",
+      "date": "2026-10-04T10:31:11.706532",
       "file_path": "data/workouts/Course_de_référence_1319379061.json"
     }
   ],
   "activities": [
+    {
+      "id": "24599887361",
+      "name": "Vitré Cyclisme",
+      "type": "cycling",
+      "distance_km": 48.14,
+      "duration_min": 166.3,
+      "date": "2026-10-04 08:21:49",
+      "gpx_path": "data/activities/gpx/Vitré_Cyclisme_24599887361.gpx",
+      "fit_path": "data/activities/fit/Vitré_Cyclisme_24599887361.zip"
+    },
+    {
+      "id": "24585377500",
+      "name": "Nat. piscine",
+      "type": "lap_swimming",
+      "distance_km": 2.52,
+      "duration_min": 83.2,
+      "date": "2026-10-02 19:30:18",
+      "gpx_path": "data/activities/gpx/Nat__piscine_24585377500.gpx",
+      "fit_path": "data/activities/fit/Nat__piscine_24585377500.zip"
+    },
+    {
+      "id": "24568807448",
+      "name": "Vitré Course à pied",
+      "type": "running",
+      "distance_km": 3.87,
+      "duration_min": 20.1,
+      "date": "2026-10-01 18:09:19",
+      "gpx_path": "data/activities/gpx/Vitré_Course_à_pied_24568807448.gpx",
+      "fit_path": "data/activities/fit/Vitré_Course_à_pied_24568807448.zip"
+    },
+    {
+      "id": "24557571950",
+      "name": "Vitré Course à pied",
+      "type": "running",
+      "distance_km": 5.04,
+      "duration_min": 33.5,
+      "date": "2026-09-30 18:57:28",
+      "gpx_path": "data/activities/gpx/Vitré_Course_à_pied_24557571950.gpx",
+      "fit_path": "data/activities/fit/Vitré_Course_à_pied_24557571950.zip"
+    },
     {
       "id": "24507283816",
       "name": "Vitré Tennis",
@@ -314,46 +340,6 @@
       "date": "2026-07-31 13:19:38",
       "gpx_path": "data/activities/gpx/Passy_Randonnée_23801773819.gpx",
       "fit_path": "data/activities/fit/Passy_Randonnée_23801773819.zip"
-    },
-    {
-      "id": "23780361658",
-      "name": "Les Houches Randonnée",
-      "type": "hiking",
-      "distance_km": 6.83,
-      "duration_min": 132.3,
-      "date": "2026-07-29 14:52:03",
-      "gpx_path": "data/activities/gpx/Les_Houches_Randonnée_23780361658.gpx",
-      "fit_path": "data/activities/fit/Les_Houches_Randonnée_23780361658.zip"
-    },
-    {
-      "id": "23775953575",
-      "name": "Passy Parapente",
-      "type": "other",
-      "distance_km": 5.55,
-      "duration_min": 22.0,
-      "date": "2026-07-29 13:02:13",
-      "gpx_path": "data/activities/gpx/Passy_Parapente_23775953575.gpx",
-      "fit_path": "data/activities/fit/Passy_Parapente_23775953575.zip"
-    },
-    {
-      "id": "23764041617",
-      "name": "Saint-Gervais-les-Bains Randonnée",
-      "type": "hiking",
-      "distance_km": 6.83,
-      "duration_min": 194.5,
-      "date": "2026-07-28 12:57:24",
-      "gpx_path": "data/activities/gpx/Saint-Gervais-les-Bains_Randonnée_23764041617.gpx",
-      "fit_path": "data/activities/fit/Saint-Gervais-les-Bains_Randonnée_23764041617.zip"
-    },
-    {
-      "id": "23751272853",
-      "name": "Saint-Gervais-les-Bains Randonnée",
-      "type": "hiking",
-      "distance_km": 7.33,
-      "duration_min": 151.0,
-      "date": "2026-07-27 14:18:32",
-      "gpx_path": "data/activities/gpx/Saint-Gervais-les-Bains_Randonnée_23751272853.gpx",
-      "fit_path": "data/activities/fit/Saint-Gervais-les-Bains_Randonnée_23751272853.zip"
     }
   ]
 }
